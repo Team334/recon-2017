@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
-  View
+    StyleSheet,
+    Navigator
 } from 'react-native';
+
+import Routes from './config/routes';
 
 export default class Recon extends Component {
     constructor(props) {
@@ -14,18 +15,15 @@ export default class Recon extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <Text> Hello </Text>
-            </View>
+            <Navigator
+                initialRoute={Routes[0]}
+                renderScene={(route, navigator) => {
+                    return route.renderScene(navigator);
+                }}
+                configureScene={(route, routeStack) => {
+                    return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
+                }}
+            />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
-});
