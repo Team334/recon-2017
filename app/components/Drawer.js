@@ -3,18 +3,36 @@ import {
     StyleSheet,
     View,
     TextInput,
-    Animated
+    Animated,
+    Dimensions
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Entypo';
 
+const DX = 150;
 const styles = StyleSheet.create({
-    container: {
+    navbar: {
+        flex: 1,
+        flexDirection: 'row'
     },
     toggle: {
-        marginRight: 1,
+        top: 50,
+        width: 50,
+        height: 50,
+        borderColor: 'white',
     },
     sidebar: {
+        position: 'absolute',
+        left: -DX,
+        width: DX,
+        backgroundColor: '#007AFF',
+        height: Dimensions.get('window').height,
+
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+
+        paddingTop: 30
     }
 });
 
@@ -27,7 +45,6 @@ const act = () => {
     }).start();
 };
 
-const DX = 200;
 export default class Drawer extends Component {
 
     constructor(props) {
@@ -53,23 +70,21 @@ export default class Drawer extends Component {
 
     render() {
         return (
-            <Animated.View
-                style={{
-                    left: this.state.moveAnimation
-                }}
-            >
-                <View style={styles.sidebar}>
-
+            <Animated.View style={{ left: this.state.moveAnimation }}>
+                <View style={styles.navbar}>
+                    <View style={styles.sidebar}>
+                        { this.props.children }
+                    </View>
+                    <View style={styles.toggle}>
+                        <Icon.Button 
+                            name="grid" 
+                            size={30} 
+                            color="#ebf7f9" 
+                            borderRadius={0}
+                            onPress={this.act}>
+                        </Icon.Button>
+                    </View>
                 </View>
-
-                <Icon.Button 
-                    name="grid" 
-                    size={30} 
-                    color="#ebf7f9" 
-                    borderRadius={0}
-                    onPress={this.act}
-                    iconStyle={styles.toggle}>
-                </Icon.Button>
             </Animated.View> 
         );
     }

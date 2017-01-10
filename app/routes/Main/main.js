@@ -12,12 +12,21 @@ const styles = StyleSheet.create({
     container: {
 
     },
+    logo: {
+        width: 75,
+        height: 75 
+    }
 });
 
 const Main = (navigator) => {
     return (
         <View style={styles.container}>
-            <Drawer />
+            <Drawer>
+                <Image 
+                    source={require('../../images/logo.png')}
+                    style={styles.logo}
+                 />
+            </Drawer>
         </View>
     );
 };
