@@ -6,8 +6,10 @@ import {
     StatusBar
 } from 'react-native';
 
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+
+import userReducers from './reducers/users';
 
 import Routes from './config/routes';
 
@@ -18,9 +20,7 @@ const styles = StyleSheet.create({
     },
 });
 
-let store = createStore((state, action) => {
-    return state;
-});
+let store = createStore(combineReducers({ user: userReducers }));
 
 export default class Recon extends Component {
     constructor(props) {

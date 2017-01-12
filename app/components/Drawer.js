@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
-    TextInput,
+    TouchableHighlight,
+    Text,
     Animated,
     Dimensions
 } from 'react-native';
@@ -17,9 +18,8 @@ const styles = StyleSheet.create({
     },
     toggle: {
         top: 50,
-        width: 50,
-        height: 50,
-        borderColor: 'white',
+        width: 32,
+        height: 34,
     },
     sidebar: {
         position: 'absolute',
@@ -32,18 +32,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
 
-        paddingTop: 30
+        paddingTop: 10 
     }
 });
-
-const act = () => {
-    destination = this.state.moveAnimation == 0 ? 50 : 0;
-
-    Animated.timing(this.state.moveAnimation, {
-        toValue: destination,
-        duration: 750
-    }).start();
-};
 
 export default class Drawer extends Component {
 
@@ -75,15 +66,15 @@ export default class Drawer extends Component {
                     <View style={styles.sidebar}>
                         { this.props.children }
                     </View>
-                    <View style={styles.toggle}>
-                        <Icon.Button 
+                    <TouchableHighlight onPress={this.act} style={styles.toggle}>
+                        <Icon
                             name="grid" 
-                            size={30} 
+                            size={30}
                             color="#ebf7f9" 
+                            style={{backgroundColor: "#007AFF"}}
                             borderRadius={0}
-                            onPress={this.act}>
-                        </Icon.Button>
-                    </View>
+                        /> 
+                    </TouchableHighlight>
                 </View>
             </Animated.View> 
         );

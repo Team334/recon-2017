@@ -7,7 +7,10 @@ import {
     View
 } from 'react-native';
 
-import UnderlinedTextInput from '../../components/UnderlinedTextInput';
+import { connect } from 'react-redux';
+import { setName } from '../../actions/name';
+
+import Name from '../../containers/Name';
 import Routes from '../../config/routes';
 
 const styles = StyleSheet.create({
@@ -33,25 +36,25 @@ const styles = StyleSheet.create({
     }
 });
 
-const Welcome = (props) => {
-    return (
-        <View style={styles.container}>
-            <Image 
-                source={require('../../images/logo.png')}
-                style={styles.logo}
-             />
-            <UnderlinedTextInput 
-                placeholder="name"
-                maxLength={20}
-                style={styles.input} 
-            />
-            <Button
-                title="enter"
-                style={styles.button}
-                onPress={() => props.navigator.push(Routes[1])}
-            />
-        </View>
-    );
+export default class Welcome extends Component {
+    render() {
+        return (
+            <View style={styles.container}>
+                <Image 
+                    source={require('../../images/logo.png')}
+                    style={styles.logo}
+                 />
+                <Name 
+                    placeholder="name"
+                    maxLength={20}
+                    style={styles.input} 
+                />
+                <Button
+                    title="enter"
+                    style={styles.button}
+                    onPress={() => this.props.navigator.push(Routes[1])}
+                />
+            </View>
+        );
+    }
 };
-
-export default Welcome;

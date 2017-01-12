@@ -6,7 +6,12 @@ import {
     View
 } from 'react-native';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+
 import Drawer from '../../components/Drawer';
+import Button from '../../components/Button';
 
 const styles = StyleSheet.create({
     container: {
@@ -14,21 +19,41 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: 75,
-        height: 75 
+        height: 75, 
+        padding: 5
+    },
+    button: {
+
     }
 });
 
-const Main = (navigator) => {
-    return (
-        <View style={styles.container}>
-            <Drawer>
-                <Image 
-                    source={require('../../images/logo.png')}
-                    style={styles.logo}
-                 />
-            </Drawer>
-        </View>
-    );
+class Main extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <Drawer>
+                    <Image 
+                        source={require('../../images/logo.png')}
+                        style={styles.logo}
+                     />
+                    <Text> {this.props.user} </Text>
+                    <Button
+                        text="Hello"
+                        onPress={() => {}}
+                        style={styles.button}
+                    />
+                </Drawer>
+
+            </View>
+        );
+    }
 };
 
-export default Main;
+export default connect(state => {
+    console.warn(JSON.stringify(state));
+    return { user: state.user };
+}, null)(Main);

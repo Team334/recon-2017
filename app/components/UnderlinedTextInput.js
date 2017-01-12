@@ -15,10 +15,15 @@ const styles = StyleSheet.create({
 });
 
 export default class UnderlinedTextInput extends Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <TextInput 
+
                     {...this.props}
                 />
             </View>
