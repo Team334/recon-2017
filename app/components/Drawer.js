@@ -18,14 +18,17 @@ const styles = StyleSheet.create({
     },
     toggle: {
         top: 50,
-        width: 32,
-        height: 34,
+        width: 52,
+        height: 54,
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10,
+        overflow: 'hidden'
     },
     sidebar: {
         position: 'absolute',
         left: -DX,
         width: DX,
-        backgroundColor: '#007AFF',
+        backgroundColor: '#1669FF',
         height: Dimensions.get('window').height,
 
         flex: 1,
@@ -69,7 +72,7 @@ export default class Drawer extends Component {
                     <TouchableHighlight onPress={this.act} style={styles.toggle}>
                         <Icon
                             name="grid" 
-                            size={30}
+                            size={50}
                             color="#ebf7f9" 
                             style={{backgroundColor: "#007AFF"}}
                             borderRadius={0}

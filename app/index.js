@@ -35,9 +35,9 @@ export default class Recon extends Component {
                 <View style={styles.container}>
                     <StatusBar hidden={true} />
                     <Navigator
-                        initialRoute={Routes[0]}
+                        initialRoute={Routes.WELCOME}
                         renderScene={(route, navigator) => {
-                            return route.renderScene(navigator);
+                            return route.render(navigator);
                         }}
                         configureScene={(route, routeStack) => {
                             return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;

@@ -19,20 +19,22 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ebf7f9'
+        backgroundColor: '#ebf7f9',
+        paddingBottom: 80 
     },
     logo: {
-        width: 75,
-        height: 75
+        width: 100,
+        height: 100 
     },
     input: {
         textAlign: 'center',
         height: 40,
-        borderBottomColor: '#000000'
+        borderBottomColor: '#000000',
     },
     button: {
         backgroundColor: 'skyblue',
-        color: 'white'
+        color: 'white',
+        fontSize: 100
     }
 });
 
@@ -47,12 +49,12 @@ export default class Welcome extends Component {
                 <Name 
                     placeholder="name"
                     maxLength={20}
-                    style={styles.input} 
+                    style={styles.input}
                 />
                 <Button
                     title="enter"
                     style={styles.button}
-                    onPress={() => this.props.navigator.push(Routes[1])}
+                    onPress={() => this.props.navigator.replace(Routes.MAIN)}
                 />
             </View>
         );

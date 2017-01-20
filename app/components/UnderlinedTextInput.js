@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#000',
         borderBottomWidth: 0.3,
         height: 40,
-        width: 70
+        width: 200
     },
 });
 
@@ -23,7 +23,6 @@ export default class UnderlinedTextInput extends Component {
         return (
             <View style={styles.container}>
                 <TextInput 
-
                     {...this.props}
                 />
             </View>
