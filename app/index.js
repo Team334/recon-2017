@@ -41,7 +41,7 @@ export default class Recon extends Component {
                             return route.render(navigator);
                         }}
                         configureScene={(route, routeStack) => {
-                            return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
+                            return Navigator.SceneConfigs.FloatFromBottom;
                         }}
                     />
                 </View>

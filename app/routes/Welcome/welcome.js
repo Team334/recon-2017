@@ -54,7 +54,7 @@ export default class Welcome extends Component {
                 <Button
                     title="enter"
                     style={styles.button}
-                    onPress={() => this.props.navigator.replace(Routes.MAIN)}
+                    onPress={() => this.props.navigator.push(Routes.MAIN)}
                 />
             </View>
         );

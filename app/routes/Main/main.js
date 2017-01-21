@@ -76,12 +76,14 @@ class Main extends Component {
                 <View style={styles.nav}>
                     <View style={styles.navButton}>
                         <TouchableOpacity onPress={() => this.toggleModal(true)}>
-                            <MaterialIcon
-                                name="pen"
-                                size={20}
-                            />
+                            <View style={styles.buttonContainer}>
+                                <MaterialIcon
+                                    name="pen"
+                                    size={20}
+                                />
+                                <Text> Collect </Text>
+                            </View>
                         </TouchableOpacity>
-                        <Text> Collect </Text>
                     </View>
                     <View style={styles.navButton}>
                         <Image
@@ -90,11 +92,15 @@ class Main extends Component {
                          />
                     </View>
                     <View style={styles.navButton}>
-                        <AwesomeIcon
-                            name="bar-chart-o"
-                            size={20}
-                        />
-                        <Text> Analyze </Text>
+                        <TouchableOpacity onPress={() => {}}>
+                            <View style={styles.buttonContainer}> 
+                                <AwesomeIcon
+                                    name="bar-chart-o"
+                                    size={20}
+                                />
+                                <Text> Analyze </Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -168,5 +174,8 @@ const styles = StyleSheet.create({
 
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    buttonContainer: {
+        alignItems: 'center',
+    },
 });
