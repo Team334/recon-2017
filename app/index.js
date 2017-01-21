@@ -10,6 +10,7 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 import userReducers from './reducers/users';
+import teamReducers from './reducers/teams';
 
 import Routes from './config/routes';
 
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     },
 });
 
-let store = createStore(combineReducers({ user: userReducers }));
+let store = createStore(combineReducers({ user: userReducers, teams: teamReducers  }));
 
 export default class Recon extends Component {
     constructor(props) {

@@ -3,7 +3,7 @@ import {
     View,
     StyleSheet,
     Text,
-    TouchableHighlight
+    TouchableOpacity
 } from 'react-native';
 
 import Routes from '../../../config/routes';
@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
 
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     button: {
         margin: 10,
@@ -38,22 +37,22 @@ export default class CollectChoices extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableHighlight
+                <TouchableOpacity
                     onPress={() => {
                         this.props.navigator.push(Routes.COLLECT.TEAM)}
                     }
                     style={styles.button}
                 >
                     <Text style={styles.text}> Team </Text>
-                </TouchableHighlight>
-                <TouchableHighlight
+                </TouchableOpacity>
+                <TouchableOpacity
                     onPress={() => {
                         this.props.navigator.push(Routes.COLLECT.MATCH)}
                     }
                     style={styles.button}
                 >
                     <Text style={styles.text}> Match </Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }

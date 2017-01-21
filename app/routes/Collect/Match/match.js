@@ -3,7 +3,9 @@ import {
     Text    
 } from 'react-native';
 
-export default class CollectMatch extends Component {
+import { connect } from 'react-redux';
+
+class CollectMatch extends Component {
     constructor(props) {
         super(props);
     }
@@ -14,3 +16,5 @@ export default class CollectMatch extends Component {
         ); 
     }
 }
+
+export default connect()(CollectMatch);

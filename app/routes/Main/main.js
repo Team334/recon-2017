@@ -5,19 +5,17 @@ import {
     Image,
     View,
     Modal,
-    TouchableHighlight,
+    TouchableOpacity,
     Navigator,
     Dimensions
 } from 'react-native';
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Routes from '../../config/routes';
 
-import Drawer from '../../components/Drawer';
-
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 class Main extends Component {
     constructor(props) {
@@ -52,7 +50,7 @@ class Main extends Component {
                     <View style={styles.fixed}>
                         <View style={styles.modal}>
                             <View style={styles.closeContainer}>
-                                <Icon.Button
+                                <MaterialIcon.Button
                                     name="close"
                                     size={30}
                                     color="#ebf7f9"
@@ -61,7 +59,7 @@ class Main extends Component {
                                     onPress={() => this.toggleModal(false)}
                                 >
                                     Collect
-                                </Icon.Button>
+                                </MaterialIcon.Button>
                             </View>
                             <Navigator
                                 initialRoute={Routes.COLLECT.CHOICES}
@@ -77,12 +75,12 @@ class Main extends Component {
                 </Modal>
                 <View style={styles.nav}>
                     <View style={styles.navButton}>
-                        <TouchableHighlight onPress={() => this.toggleModal(true)}>
-                            <Icon
+                        <TouchableOpacity onPress={() => this.toggleModal(true)}>
+                            <MaterialIcon
                                 name="pen"
                                 size={20}
                             />
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                         <Text> Collect </Text>
                     </View>
                     <View style={styles.navButton}>
@@ -92,8 +90,8 @@ class Main extends Component {
                          />
                     </View>
                     <View style={styles.navButton}>
-                        <Icon
-                            name="archive"
+                        <AwesomeIcon
+                            name="bar-chart-o"
                             size={20}
                         />
                         <Text> Analyze </Text>
