@@ -22,8 +22,12 @@ class Main extends Component {
         super(props);
 
         this.toggleModal = this.toggleModal.bind(this);
+        this.requireBackButton = this.requireBackButton.bind(this);
+        this.updateBack = this.updateBack.bind(this);
+
         this.state = {
             collect: false,
+            back: false,
         };
 
     }
@@ -34,9 +38,43 @@ class Main extends Component {
         });
     };
 
-    componentDidMount() {
-        this.toggleModal(false);
-    }
+    requireBackButton = () => {
+        if (this.state.back) {
+            return (
+                <MaterialIcon.Button
+                    name="chevron-left"
+                    size={35}
+                    color="#ebf7f9"
+                    style={{backgroundColor: "#125cd3"}}
+                    borderRadius={0}
+                    onPress={() => this.refs.innerNav.pop()}
+                />
+            );
+        } else {
+            return (
+                <MaterialIcon.Button
+                    name="chevron-left"
+                    size={35}
+                    color="#125cd3"
+                    style={{backgroundColor: "#125cd3"}}
+                    borderRadius={0}
+                    onPress={() => this.refs.innerNav.pop()}
+                />
+            );
+        }
+    };
+
+    updateBack = () => {
+        if (this.refs.innerNav && this.refs.innerNav.getCurrentRoutes().length > 1) {
+            this.setState({
+                back: true
+            });
+        } else {
+            this.setState({
+                back: false
+            });
+        }
+    };
 
     render() {
         return (
@@ -50,18 +88,20 @@ class Main extends Component {
                     <View style={styles.fixed}>
                         <View style={styles.modal}>
                             <View style={styles.closeContainer}>
+                                {this.requireBackButton()}
+                                <Text style={styles.modalTitle}> Collect </Text>
                                 <MaterialIcon.Button
                                     name="close"
-                                    size={30}
+                                    size={35}
                                     color="#ebf7f9"
                                     style={{backgroundColor: "#125cd3"}}
                                     borderRadius={0}
                                     onPress={() => this.toggleModal(false)}
-                                >
-                                    Collect
-                                </MaterialIcon.Button>
+                                />
                             </View>
+
                             <Navigator
+                                ref="innerNav"
                                 initialRoute={Routes.COLLECT.CHOICES}
                                 renderScene={(route, navigator) => {
                                     return route.render(navigator);
@@ -69,6 +109,7 @@ class Main extends Component {
                                 configureScene={(route, routeStack) => {
                                     return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
                                 }}
+                                onDidFocus={(e) => this.updateBack()}
                             />
                         </View>
                     </View>
@@ -146,7 +187,21 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
 
-        overflow: 'hidden'
+        padding: 5,
+
+        height: 50,
+
+        overflow: 'hidden',
+
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+
+        backgroundColor: '#125cd3'
+    },
+    modalTitle: {
+        color: '#ebf7f9',
+        fontSize: 18,
     },
     logo: {
         width: 80,
@@ -170,7 +225,6 @@ const styles = StyleSheet.create({
     navButton: {
         width: 110,
         height: 70,
-
 
         alignItems: 'center',
         justifyContent: 'center'

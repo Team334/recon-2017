@@ -48,6 +48,7 @@ export default class Welcome extends Component {
                  />
                 <Name 
                     placeholder="name"
+                    width={200}
                     maxLength={20}
                     style={styles.input}
                 />

@@ -7,6 +7,8 @@ import {
 
 import { connect } from 'react-redux';
 
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -29,6 +31,8 @@ class CollectMatch extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <View style={styles.row}>
+                </View>
             </View>
         ); 
     }

@@ -8,7 +8,7 @@ import CollectTeam from '../routes/Collect/Team/team';
 import CollectMatch from '../routes/Collect/Match/match';
 
 const routes = { 
-    WELCOME: { 
+    WELCOME: {
         render: (navigator) => {
             return <Welcome navigator={navigator} />; }
     },
