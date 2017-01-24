@@ -7,8 +7,7 @@ import {
     View
 } from 'react-native';
 
-import { connect } from 'react-redux';
-import { setName } from '../../actions/name';
+import { connect } from 'react-redux'; import { setName } from '../../actions/name';
 
 import Name from '../../containers/Name';
 import Routes from '../../config/routes';

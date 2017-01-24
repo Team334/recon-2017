@@ -41,7 +41,10 @@ export default class Recon extends Component {
                             return route.render(navigator);
                         }}
                         configureScene={(route, routeStack) => {
-                            return Navigator.SceneConfigs.FloatFromBottom;
+                            return {
+                                ...Navigator.SceneConfigs.FloatFromBottom,
+                                gestures: {},
+                            };
                         }}
                     />
                 </View>

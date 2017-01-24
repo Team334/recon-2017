@@ -107,7 +107,10 @@ class Main extends Component {
                                     return route.render(navigator);
                                 }}
                                 configureScene={(route, routeStack) => {
-                                    return Navigator.SceneConfigs.HorizontalSwipeJumpFromRight;
+                                    return {
+                                        ...Navigator.SceneConfigs.HorizontalSwipeJumpFromRight,
+                                        gestures: {},
+                                    }
                                 }}
                                 onDidFocus={(e) => this.updateBack()}
                             />
@@ -134,7 +137,7 @@ class Main extends Component {
                     </View>
                     <View style={styles.navButton}>
                         <TouchableOpacity onPress={() => {}}>
-                            <View style={styles.buttonContainer}> 
+                            <View style={styles.buttonContainer}>
                                 <AwesomeIcon
                                     name="bar-chart-o"
                                     size={20}
