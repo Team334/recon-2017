@@ -8,10 +8,12 @@ import {
 
 import Routes from '../../../config/routes';
 
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -22,11 +24,18 @@ const styles = StyleSheet.create({
         borderRadius: 5,
 
         backgroundColor: '#125cd3',
+
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        width: 200,
+        height: 125,
     },
     text: {
         fontSize: 20,
         color: '#ebf7f9',
-    } 
+    }
 });
 
 export default class CollectChoices extends Component {
@@ -43,6 +52,14 @@ export default class CollectChoices extends Component {
                     }
                     style={styles.button}
                 >
+                    <MaterialIcon
+                        name="account-multiple"
+                        size={35}
+                        color="#ebf7f9"
+                        style={{backgroundColor: "#125cd3"}}
+                        borderRadius={0}
+                    />
+
                     <Text style={styles.text}> Team </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -51,6 +68,13 @@ export default class CollectChoices extends Component {
                     }
                     style={styles.button}
                 >
+                    <MaterialIcon
+                        name="trophy"
+                        size={35}
+                        color="#ebf7f9"
+                        style={{backgroundColor: "#125cd3"}}
+                        borderRadius={0}
+                    />
                     <Text style={styles.text}> Match </Text>
                 </TouchableOpacity>
             </View>
