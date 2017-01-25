@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
+import Routes from '../config/routes';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -29,7 +30,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
 
         backgroundColor: '#5E8FDC',
-
         borderRadius: 5,
         flexDirection: 'row',
     },
@@ -37,13 +37,9 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5,
 
-        shadowColor: '#5E8FDC',
-        shadowRadius: 5,
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0.3,
+        shadowColor: '#000000',
+        shadowRadius: 10,
+        shadowOpacity: 0.1,
 
         width: 235,
 
@@ -64,20 +60,17 @@ const styles = StyleSheet.create({
 
         backgroundColor: '#5E8FDC',
 
-        shadowColor: '#d0e1fb',
-        shadowRadius: 5,
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0.3,
+        shadowColor: '#000000',
+        shadowRadius: 10,
+        shadowOpacity: 0.1
     },
     teams: {
         backgroundColor: '#5E8FDC',
         borderRadius: 5,
         padding: 5,
 
-        shadowColor: '#d0e1fb', shadowRadius: 5,
+        shadowColor: '#d0e1fb',
+        shadowRadius: 5,
         shadowOffset: {
             width: 0,
             height: 0,
@@ -96,8 +89,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     teamSelectContainer: {
-        borderBottomWidth: 1,
-        borderColor: 'white',
+        margin: 2,
     }
 });
 
@@ -115,6 +107,7 @@ class TeamSelect extends Component {
 
         this.search = this.search.bind(this);
         this.renderTeam = this.renderTeam.bind(this);
+        this.renderFooter = this.renderFooter.bind(this);
     }
 
     search(status) {
@@ -128,10 +121,21 @@ class TeamSelect extends Component {
         }).start();
     }
 
+    renderFooter() {
+        return (
+            <TouchableOpacity style={styles.teamSelectContainer} onPress={() => {
+                this.search(false);
+                this.props.navigator.push(Routes.COLLECT.TEAM);
+            }}>
+                <Text style={styles.teamSelect}> Add Team </Text>
+            </TouchableOpacity>
+        );
+    }
+
     renderTeam(data) {
         return (
             <TouchableOpacity style={styles.teamSelectContainer} onPress={() => {
-                this.search(false)
+                this.search(false);
                 this.setState({team: "Team " + data.number});
 
                 if (this.props.onSelect) {
@@ -140,6 +144,7 @@ class TeamSelect extends Component {
             }}>
                 <Text style={styles.teamSelect}> Team {data.number} </Text>
             </TouchableOpacity>
+
         );
     }
 
@@ -169,6 +174,7 @@ class TeamSelect extends Component {
                         dataSource={this.state.teams}
                         initialListSize={0}
                         enableEmptySections={true}
+                        renderFooter={this.renderFooter}
                         renderRow={(rowData) => this.renderTeam(rowData)}
                     />
                 </Animated.View>
