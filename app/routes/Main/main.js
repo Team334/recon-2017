@@ -9,7 +9,6 @@ import {
     Navigator,
     Dimensions
 } from 'react-native';
-
 import { connect } from 'react-redux';
 
 import Routes from '../../config/routes';
@@ -111,7 +110,7 @@ class Main extends Component {
                                         ...Navigator.SceneConfigs.HorizontalSwipeJumpFromRight,
                                         gestures: {},
                                     }
-                                }}
+                                }} 
                                 onDidFocus={(e) => this.updateBack()}
                             />
                         </View>
@@ -204,7 +203,7 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         color: '#ebf7f9',
-        fontSize: 18,
+        fontSize: 25,
     },
     logo: {
         width: 80,
