@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         flexDirection: 'column',
     },
-    display: {
+    display: { 
         shadowColor: '#d0e1fb',
         shadowRadius: 5,
         shadowOffset: {
@@ -106,8 +106,16 @@ class TeamSelect extends Component {
         };
 
         this.search = this.search.bind(this);
-        this.renderTeam = this.renderTeam.bind(this);
-        this.renderFooter = this.renderFooter.bind(this);
+        this._renderTeam = this._renderTeam.bind(this);
+        this._renderFooter = this._renderFooter.bind(this);
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        if (nextProps === this.props) return;
+
+        this.setState({
+            teams: this.state.teams.cloneWithRows(nextProps.teams.sort((a, b) => a.number - b.number))
+        });
     }
 
     search(status) {
@@ -121,7 +129,7 @@ class TeamSelect extends Component {
         }).start();
     }
 
-    renderFooter() {
+    _renderFooter() {
         return (
             <TouchableOpacity style={styles.teamSelectContainer} onPress={() => {
                 this.search(false);
@@ -132,7 +140,7 @@ class TeamSelect extends Component {
         );
     }
 
-    renderTeam(data) {
+    _renderTeam(data) {
         return (
             <TouchableOpacity style={styles.teamSelectContainer} onPress={() => {
                 this.search(false);
@@ -174,8 +182,8 @@ class TeamSelect extends Component {
                         dataSource={this.state.teams}
                         initialListSize={0}
                         enableEmptySections={true}
-                        renderFooter={this.renderFooter}
-                        renderRow={(rowData) => this.renderTeam(rowData)}
+                        renderFooter={this._renderFooter}
+                        renderRow={(rowData) => this._renderTeam(rowData)}
                     />
                 </Animated.View>
             </Animated.View>
