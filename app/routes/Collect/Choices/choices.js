@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         borderRadius: 5,
 
-        backgroundColor: '#125cd3',
+        backgroundColor: '#3e75cc',
 
         flexDirection: 'row',
         justifyContent: 'center',
@@ -59,7 +59,7 @@ export default class CollectChoices extends Component {
                         name="account-multiple"
                         size={35}
                         color="#ebf7f9"
-                        style={{backgroundColor: "#125cd3"}}
+                        style={{backgroundColor: "#3E75CC"}}
                         borderRadius={0}
                     />
 
@@ -75,7 +75,7 @@ export default class CollectChoices extends Component {
                         name="trophy"
                         size={35}
                         color="#ebf7f9"
-                        style={{backgroundColor: "#125cd3"}}
+                        style={{backgroundColor: "#3E75CC"}}
                         borderRadius={0}
                     />
                     <Text style={styles.text}> Match </Text>

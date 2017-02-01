@@ -7,7 +7,7 @@ import {
 
 const styles = StyleSheet.create({
     container: {
-        borderBottomColor: '#000',
+        borderBottomColor: '#4970b2',
         borderBottomWidth: 0.3,
         height: 40, 
     },

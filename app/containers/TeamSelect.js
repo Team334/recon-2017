@@ -17,8 +17,7 @@ const styles = StyleSheet.create({
     container: {
         margin: 10,
 
-        overflow: 'hidden',
-        flexDirection: 'column',
+        overflow: 'hidden', flexDirection: 'column',
     },
     display: { 
         shadowColor: '#d0e1fb',
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.1,
 
-        backgroundColor: '#5E8FDC',
+        backgroundColor: '#3E75CC',
         borderRadius: 5,
         flexDirection: 'row',
     },
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
 
-        backgroundColor: '#5E8FDC',
+        backgroundColor: '#3E75CC',
 
         shadowColor: '#000000',
         shadowRadius: 10,
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     teamSelect: {
-        color: '#fff',
+        color: '#ebf7f9',
         fontSize: 20,
     },
     teamSelectContainer: {
@@ -168,10 +167,10 @@ class TeamSelect extends Component {
                             onPress={() => this.search(true)}
                         >
                             <MaterialIcon
-                                name= "arrow-down-drop-circle-outline"
+                                name="arrow-down-drop-circle-outline"
                                 size={30}
                                 color="#ebf7f9"
-                                style={{backgroundColor: "#5E8FDC"}}
+                                style={{backgroundColor: "#3E75CC"}}
                                 borderRadius={5}
                             />
                         </TouchableOpacity>

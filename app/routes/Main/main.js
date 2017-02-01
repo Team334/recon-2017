@@ -26,8 +26,7 @@ class Main extends Component {
 
         this.state = {
             collect: false,
-            back: false,
-        };
+            back: false, };
 
     }
 
@@ -44,7 +43,7 @@ class Main extends Component {
                     name="chevron-left"
                     size={35}
                     color="#ebf7f9"
-                    style={{backgroundColor: "#125cd3"}}
+                    style={{backgroundColor: "#1E5AB8"}}
                     borderRadius={0}
                     onPress={() => this.refs.innerNav.pop()}
                 />
@@ -54,10 +53,10 @@ class Main extends Component {
                 <MaterialIcon.Button
                     name="chevron-left"
                     size={35}
-                    color="#125cd3"
-                    style={{backgroundColor: "#125cd3"}}
-                    borderRadius={0}
-                    onPress={() => this.refs.innerNav.pop()}
+                    color="#1E5AB8" 
+                    style={{backgroundColor: "#1E5AB8"}} 
+                    borderRadius={0} 
+                    onPress={() => this.refs.innerNav.pop()} 
                 />
             );
         }
@@ -93,7 +92,7 @@ class Main extends Component {
                                     name="close"
                                     size={35}
                                     color="#ebf7f9"
-                                    style={{backgroundColor: "#125cd3"}}
+                                    style={{backgroundColor: "#1E5AB8"}}
                                     borderRadius={0}
                                     onPress={() => this.toggleModal(false)}
                                 />
@@ -199,7 +198,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
 
-        backgroundColor: '#125cd3'
+        backgroundColor: '#1E5AB8'
     },
     modalTitle: {
         color: '#ebf7f9',
