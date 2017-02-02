@@ -85,6 +85,11 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 20,
     },
+    counterSection: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        paddingRight: 10,
+    },
     sectionText: {
         color: '#ebf7f9',
 
@@ -116,8 +121,7 @@ class CollectMatch extends Component {
                 shooting_attempts: 0
             },
             end: {
-                climber: false,
-                fouls: 0,
+                climber: false, fouls: 0,
                 score: 0
             }
         };
@@ -306,9 +310,20 @@ class TeleopForm extends Component {
                     <Toggle onCheck={(check) => this.props.set("low", check, "teleop")} />
                 </View>
 
-                <Counter onChange={(val) => this.props.set("balls_in_boiler", val, "teleop")} />
-                <Counter onChange={(val) => this.props.set("gears_on_ship", val, "teleop")} />
-                <Counter onChange={(val) => this.props.set("hoppers_activated", val, "teleop")} />
+                <View style={[styles.section, styles.counterSection]}>
+                    <Text style={styles.sectionText}>Gears on ship</Text>
+                    <Counter small={true} onChange={(val) => this.props.set("gears_on_ship", val, "teleop")} />
+                </View>
+
+                <View style={[styles.section, styles.counterSection]}>
+                    <Text style={styles.sectionText}>Hoppers activated</Text>
+                    <Counter small={true} onChange={(val) => this.props.set("hoppers_activated", val, "teleop")} />
+                </View>
+
+                <View style={[styles.section, styles.counterSection, {borderBottomWidth: 0}]}>
+                    <Text style={styles.sectionText}>Balls in boiler</Text>
+                    <Counter onChange={(val) => this.props.set("balls_in_boiler", val, "teleop")} />
+                </View>
             </View>
         );
     }
