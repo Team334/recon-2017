@@ -43,11 +43,11 @@ export default class Counter extends Component {
             count = this.props.max;
         }
 
-        this.setState({ count });
-
-        if (this.props.onChange) {
-            this.props.onChange(this.state.count);
-        }
+        this.setState({ count }, () => {
+            if (this.props.onChange) {
+                this.props.onChange(this.state.count);
+            }
+        });
 
         Animated.sequence([
             Animated.timing(this.state.opacity, {

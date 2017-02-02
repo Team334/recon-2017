@@ -34,11 +34,11 @@ export default class ColorSelect extends Component {
     }
 
     setColor(color) {
-        this.setState({ color });
-
-        if (this.props.onSelect) {
-            this.props.onSelect(color);
-        }
+        this.setState({ color }, () => {
+            if (this.props.onSelect) {
+                this.props.onSelect(color);
+            }
+        });
     }
 
     render() {

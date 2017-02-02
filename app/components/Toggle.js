@@ -81,11 +81,11 @@ export default class Toggle extends Component {
     _toggle() {
         this.setState({
             checked: !this.state.checked
+        }, () => {
+            if (this.props.onCheck) {
+                this.props.onCheck(this.state.checked);
+            }
         });
-
-        if (this.props.onCheck) {
-            this.props.onCheck(this.state.checked);
-        }
 
         Animated.timing(this.state.left, {
             toValue: this.state.checked ? 0 : 30,

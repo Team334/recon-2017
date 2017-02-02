@@ -105,24 +105,28 @@ class CollectMatch extends Component {
         this._set = this._set.bind(this);
 
         this.state = {
-            team: "",
-            auton: {
-                passed_baseline: false,
-                placed_gear: false,
-                shot_ball: false,
-            },
-            teleop: {
-                high: false,
-                low: false,
+            form: {
+                team: "",
+                color: "",
+                auton: {
+                    passed_baseline: false,
+                    placed_gear: false,
+                    shot_ball: false,
+                },
+                teleop: {
+                    high: false,
+                    low: false,
 
-                balls_in_boiler: 0,
-                gears_on_ship: 0,
-                hoppers_activated: 0,
-                shooting_attempts: 0
-            },
-            end: {
-                climber: false, fouls: 0,
-                score: 0
+                    balls_in_boiler: 0,
+                    gears_on_ship: 0,
+                    hoppers_activated: 0,
+                    shooting_attempts: 0
+                },
+                end: {
+                    climber: false, 
+                    fouls: 0,
+                    score: 0
+                }
             }
         };
     }
@@ -136,12 +140,14 @@ class CollectMatch extends Component {
     _set(key, val, mode = "") {
         if (mode != "") {
             this.setState({
-                [mode]: Object.assign({}, this.state[mode], {
-                    [key]: val
+                form: Object.assign({}, this.state["form"], {
+                    [mode]: Object.assign({}, this.state["form"][mode], {
+                        [key]: val
+                    })
                 })
             });
         } else {
-            this.setState({[key]: val});
+            this.setState({ form: Object.assign({}, this.state["form"], {[key]: val}) });
         }
     }
 
