@@ -8,11 +8,11 @@ import {
     Dimensions,
     TouchableOpacity
 } from 'react-native';
-import { connect } from 'react-redux';
-import TeamSelect from '../../../containers/TeamSelect';
 
-import UnderlinedTextInput from '../../../components/UnderlinedTextInput';
-import ColorSelect from '../../../components/ColorSelect';
+import { connect } from 'react-redux'; import TeamSelect from '../../../containers/TeamSelect';
+import { addMatch } from '../../../actions/match';
+
+import UnderlinedTextInput from '../../../components/UnderlinedTextInput'; import ColorSelect from '../../../components/ColorSelect';
 import Toggle from '../../../components/Toggle';
 import Counter from '../../../components/Counter';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -94,6 +94,37 @@ const styles = StyleSheet.create({
         color: '#ebf7f9',
 
         fontSize: 17,
+    },
+    submitText: {
+        marginLeft: 5,
+        marginRight: 5,
+        bottom: 2
+    },
+    submit: {
+        flexDirection: 'row',
+        width: 130,
+        height: 50,
+        bottom: 5,
+
+        padding: 5,
+        borderRadius: 25,
+
+        shadowColor: '#000000',
+        shadowRadius: 32,
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.1,
+
+        backgroundColor: '#3E75CC',
+
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    endContainer: {
+        flex: 1,
+        justifyContent: 'space-between',
     }
 });
 
@@ -103,6 +134,7 @@ class CollectMatch extends Component {
 
         this._scrollTo = this._scrollTo.bind(this);
         this._set = this._set.bind(this);
+        this._submit = this._submit.bind(this);
 
         this.state = {
             form: {
@@ -123,12 +155,17 @@ class CollectMatch extends Component {
                     shooting_attempts: 0
                 },
                 end: {
-                    climber: false, 
+                    climber: false,
                     fouls: 0,
                     score: 0
                 }
             }
         };
+    }
+
+    _submit() {
+        this.props.dispatch(addMatch(this.state.form));
+        this.props.navigator.pop();
     }
 
     _scrollTo(index) {
@@ -138,17 +175,19 @@ class CollectMatch extends Component {
     }
 
     _set(key, val, mode = "") {
-        if (mode != "") {
-            this.setState({
-                form: Object.assign({}, this.state["form"], {
-                    [mode]: Object.assign({}, this.state["form"][mode], {
-                        [key]: val
-                    })
+        const form = mode != "" ? {
+            form: Object.assign({}, this.state.form, {
+                [mode]: Object.assign({}, this.state.form[mode], {
+                    [key]: val
                 })
-            });
-        } else {
-            this.setState({ form: Object.assign({}, this.state["form"], {[key]: val}) });
-        }
+            })
+        } : {
+            form: Object.assign({}, this.state.form, {
+                [key]: val
+            })
+        };
+
+        this.setState(form);
     }
 
     render() {
@@ -227,7 +266,7 @@ class CollectMatch extends Component {
                                 <TeleopForm set={this._set} />
                             </View>
                             <View style={styles.screen}>
-                                <EndForm set={this._set} />
+                                <EndForm onSubmit={() => this._submit()} set={this._set} />
                             </View>
                         </ScrollView>
                     </View>
@@ -251,7 +290,7 @@ class PrematchForm extends Component {
                     width={200}
                     style={styles.matchNum}
                     keyboardType="numeric"
-                    onChange={(text) => this.props.set("team", text)}
+                    onChangeText={(text) => this.props.set("team", text)}
                 />
                 <ColorSelect onSelect={(color) => this.props.set("color", color)} />
             </View>
@@ -338,16 +377,48 @@ class TeleopForm extends Component {
 class EndForm extends Component {
     constructor(props) {
         super(props);
+
+        this._submit = this._submit.bind(this);
+    }
+
+    _submit() {
+        if (this.props.onSubmit) {
+            this.props.onSubmit();
+        }
     }
 
     render() {
         return (
-            <View>
-                <View style={styles.section}>
-                    <View style={{ width: 100, alignItems: 'center' }}>
-                        <Text style={styles.sectionText}>Climber</Text>
+            <View style={styles.endContainer}>
+                <View>
+                    <View style={styles.section}>
+                        <View style={{ width: 100, alignItems: 'center' }}>
+                            <Text style={styles.sectionText}>Climber</Text>
+                        </View>
+                        <Toggle onCheck={(check) => this.props.set("climber", check, "end")} />
                     </View>
-                    <Toggle onCheck={(check) => this.props.set("climber", check, "end")} />
+                    <View style={[styles.section, styles.counterSection]}>
+                        <Text style={styles.sectionText}>Fouls</Text>
+                        <Counter small={true} onChange={(val) => this.props.set("fouls", val, "end")} />
+                    </View>
+                    <View style={[styles.section, styles.counterSection, {borderBottomWidth: 0}]}>
+                        <Text style={styles.sectionText}>Score</Text>
+                        <Counter onChange={(val) => this.props.set("score", val, "end")} />
+                    </View>
+                </View>
+
+                <View style={[styles.section, styles.counterSection, {borderBottomWidth: 0}]}>
+                    <TouchableOpacity style={styles.submit} onPress={() => this._submit()}
+                    >
+                        <Text style={[styles.sectionText, styles.submitText]}>Submit</Text>
+                        <MaterialIcon
+                            name="arrow-right"
+                            size={25}
+                            color="#ebf7f9"
+                            style={{backgroundColor: "#3E75CC"}}
+                            borderRadius={0}
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
         );

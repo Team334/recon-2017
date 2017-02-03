@@ -3,7 +3,6 @@ import {
 } from '../actions/team';
 
 export default function team(state=[], action) {
-
     switch (action.type) {
     case ADD_TEAM:
         for (var i = 0; i < state.length; i++) {
@@ -17,4 +16,4 @@ export default function team(state=[], action) {
     default:
         return state;
     }
-}
+};
