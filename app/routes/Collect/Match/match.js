@@ -290,7 +290,7 @@ class PrematchForm extends Component {
                     width={200}
                     style={styles.matchNum}
                     keyboardType="numeric"
-                    onChangeText={(text) => this.props.set("team", text)}
+                    onChangeText={(text) => this.props.set("match", text)}
                 />
                 <ColorSelect onSelect={(color) => this.props.set("color", color)} />
             </View>

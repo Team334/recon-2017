@@ -12,11 +12,12 @@ import {
 import { connect } from 'react-redux';
 
 import Routes from '../../config/routes';
+import Matches from '../../containers/Matches'; 
 
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-class Main extends Component {
+export default class Main extends Component {
     constructor(props) {
         super(props);
 
@@ -26,8 +27,8 @@ class Main extends Component {
 
         this.state = {
             collect: false,
-            back: false, };
-
+            back: false, 
+        };
     }
 
     toggleModal = (state) => {
@@ -50,8 +51,7 @@ class Main extends Component {
             );
         } else {
             return (
-                <MaterialIcon.Button
-                    name="chevron-left"
+                <MaterialIcon.Button name="chevron-left"
                     size={35}
                     color="#1E5AB8" 
                     style={{backgroundColor: "#1E5AB8"}} 
@@ -115,6 +115,9 @@ class Main extends Component {
                         </View>
                     </View>
                 </Modal>
+                <View style={styles.matches}>
+                    <Matches />
+                </View>
                 <View style={styles.nav}>
                     <View style={styles.navButton}>
                         <TouchableOpacity onPress={() => this.toggleModal(true)}>
@@ -149,10 +152,6 @@ class Main extends Component {
         );
     }
 };
-
-export default connect(state => {
-    return { user: state.user };
-}, null)(Main);
 
 const styles = StyleSheet.create({
     container: {
@@ -210,12 +209,14 @@ const styles = StyleSheet.create({
         bottom: 10
     },
     nav: {
+        position: 'absolute',
+
         backgroundColor: '#ebf7f9',
 
         height: 70,
+        width: Dimensions.get('window').width,
         top: Dimensions.get('window').height - 70,
 
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
 
@@ -233,4 +234,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'center',
     },
+    matches: {
+        height: Dimensions.get('window').height - 70,
+
+    }
 });
