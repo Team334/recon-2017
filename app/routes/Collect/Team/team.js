@@ -7,6 +7,8 @@ import {
     StyleSheet
 } from 'react-native';
 
+import Networking from '../../../utils/Networking';
+
 import { connect } from 'react-redux';
 import { addTeam } from '../../../actions/team';
 
@@ -83,6 +85,10 @@ class CollectTeam extends Component {
         if (this.state.teamNumber == "") {
             return;
         }
+
+        this.props.conn.submitTeam({
+            number: this.state.teamNumber,
+        });
 
         this.props.dispatch(addTeam({
             number: this.state.teamNumber,

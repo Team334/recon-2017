@@ -5,10 +5,11 @@ import {
     Image,
     View,
     Modal,
-    TouchableOpacity,
-    Navigator,
-    Dimensions
+    TouchableOpacity, Navigator, Dimensions
 } from 'react-native';
+
+import Networking from '../../utils/Networking';
+
 import { connect } from 'react-redux';
 
 import Routes from '../../config/routes';
@@ -17,7 +18,7 @@ import Matches from '../../containers/Matches';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
-export default class Main extends Component {
+class Main extends Component {
     constructor(props) {
         super(props);
 
@@ -29,6 +30,8 @@ export default class Main extends Component {
             collect: false,
             back: false, 
         };
+
+        this.conn = Networking.connect(this.props.dispatch);
     }
 
     toggleModal = (state) => {
@@ -63,15 +66,9 @@ export default class Main extends Component {
     };
 
     updateBack = () => {
-        if (this.refs.innerNav && this.refs.innerNav.getCurrentRoutes().length > 1) {
-            this.setState({
-                back: true
-            });
-        } else {
-            this.setState({
-                back: false
-            });
-        }
+        this.setState({
+            back: this.refs.innerNav && this.refs.innerNav.getCurrentRoutes().length > 1
+        });
     };
 
     render() {
@@ -102,7 +99,7 @@ export default class Main extends Component {
                                 ref="innerNav"
                                 initialRoute={Routes.COLLECT.CHOICES}
                                 renderScene={(route, navigator) => {
-                                    return route.render(navigator);
+                                    return route.render(navigator, this.conn);
                                 }}
                                 configureScene={(route, routeStack) => {
                                     return {
@@ -116,7 +113,7 @@ export default class Main extends Component {
                     </View>
                 </Modal>
                 <View style={styles.matches}>
-                    <Matches />
+                    <Matches conn={this.conn} />
                 </View>
                 <View style={styles.nav}>
                     <View style={styles.navButton}>
@@ -152,6 +149,8 @@ export default class Main extends Component {
         );
     }
 };
+
+export default connect()(Main);
 
 const styles = StyleSheet.create({
     container: {

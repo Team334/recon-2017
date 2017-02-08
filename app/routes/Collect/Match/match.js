@@ -9,6 +9,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+import Networking from '../../../utils/Networking';
+
 import { connect } from 'react-redux'; import TeamSelect from '../../../containers/TeamSelect';
 import { addMatch } from '../../../actions/match';
 
@@ -65,8 +67,7 @@ const styles = StyleSheet.create({
         margin: 5,
     },
     matchNum: {
-        textAlign: 'center',
-        height: 40,
+        textAlign: 'center', height: 40,
         borderBottomColor: '#000000',
         fontSize: 30,
         color: '#ebf7f9'
@@ -84,6 +85,10 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
         paddingLeft: 10,
         paddingRight: 20,
+    },
+    center: {
+        flex: 1,
+        alignItems: 'center',
     },
     counterSection: {
         flexDirection: 'column',
@@ -106,6 +111,8 @@ const styles = StyleSheet.create({
         height: 50,
         bottom: 5,
 
+        marginTop: 20,
+
         padding: 5,
         borderRadius: 25,
 
@@ -122,10 +129,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    endContainer: {
-        flex: 1,
-        justifyContent: 'space-between',
-    }
 });
 
 class CollectMatch extends Component {
@@ -138,8 +141,9 @@ class CollectMatch extends Component {
 
         this.state = {
             form: {
-                team: "",
-                color: "",
+                team: '',
+                match: '',
+                color: '',
                 auton: {
                     passed_baseline: false,
                     placed_gear: false,
@@ -152,7 +156,6 @@ class CollectMatch extends Component {
                     balls_in_boiler: 0,
                     gears_on_ship: 0,
                     hoppers_activated: 0,
-                    shooting_attempts: 0
                 },
                 end: {
                     climber: false,
@@ -164,6 +167,8 @@ class CollectMatch extends Component {
     }
 
     _submit() {
+        this.props.conn.submitMatch(this.state.form);
+
         this.props.dispatch(addMatch(this.state.form));
         this.props.navigator.pop();
     }
@@ -174,8 +179,8 @@ class CollectMatch extends Component {
         });
     }
 
-    _set(key, val, mode = "") {
-        const form = mode != "" ? {
+    _set(key, val, mode = '') {
+        const form = mode != '' ? {
             form: Object.assign({}, this.state.form, {
                 [mode]: Object.assign({}, this.state.form[mode], {
                     [key]: val
@@ -195,7 +200,7 @@ class CollectMatch extends Component {
             <View style={styles.container}>
                 <TeamSelect
                     navigator={this.props.navigator}
-                    onSelect={(team) => this._set("team", team)}
+                    onSelect={(team) => this._set('team', team)}
                 />
                 <View style={styles.form}>
                     <View style={styles.tabbar}>
@@ -203,10 +208,10 @@ class CollectMatch extends Component {
                             style={styles.tab}
                             onPress={() => this._scrollTo(0)}
                         >
-                            <EntypoIcon name="clipboard"
+                            <EntypoIcon name='clipboard'
                                 size={24}
-                                color="#ebf7f9"
-                                style={{backgroundColor: "#3E75CC"}}
+                                color='#ebf7f9'
+                                style={{backgroundColor: '#3E75CC'}}
                                 borderRadius={0}
                             />
                         </TouchableOpacity>
@@ -215,10 +220,10 @@ class CollectMatch extends Component {
                             onPress={() => this._scrollTo(1)}
                         >
                             <MaterialIcon
-                                name="chip"
+                                name='chip'
                                 size={35}
-                                color="#ebf7f9"
-                                style={{backgroundColor: "#3E75CC"}}
+                                color='#ebf7f9'
+                                style={{backgroundColor: '#3E75CC'}}
                                 borderRadius={0}
                             />
                         </TouchableOpacity>
@@ -227,10 +232,10 @@ class CollectMatch extends Component {
                             onPress={() => this._scrollTo(2)}
                         >
                             <MaterialIcon
-                                name="xbox-controller"
+                                name='xbox-controller'
                                 size={35}
-                                color="#ebf7f9"
-                                style={{backgroundColor: "#3E75CC"}}
+                                color='#ebf7f9'
+                                style={{backgroundColor: '#3E75CC'}}
                                 borderRadius={0}
                             />
                         </TouchableOpacity>
@@ -239,10 +244,10 @@ class CollectMatch extends Component {
                             onPress={() => this._scrollTo(3)}
                         >
                             <MaterialIcon
-                                name="flag-variant"
+                                name='flag-variant'
                                 size={35}
-                                color="#ebf7f9"
-                                style={{backgroundColor: "#3E75CC"}}
+                                color='#ebf7f9'
+                                style={{backgroundColor: '#3E75CC'}}
                                 borderRadius={0}
                             />
                         </TouchableOpacity>
@@ -254,7 +259,7 @@ class CollectMatch extends Component {
                             pagingEnabled={true}
                             showsHorizontalScrollIndicator={false}
                             style={{ height: 360 }}
-                            ref="scroll"
+                            ref='scroll'
                         >
                             <View style={[styles.center, styles.screen]}>
                                 <PrematchForm set={this._set} />
@@ -267,6 +272,21 @@ class CollectMatch extends Component {
                             </View>
                             <View style={styles.screen}>
                                 <EndForm onSubmit={() => this._submit()} set={this._set} />
+                                <View style={styles.center}>
+                                    <TouchableOpacity 
+                                        style={styles.submit}
+                                        onPress={() => this._submit()}
+                                    >
+                                        <Text style={[styles.sectionText, styles.submitText]}>Submit</Text>
+                                        <MaterialIcon
+                                            name='arrow-right'
+                                            size={25}
+                                            color='#ebf7f9'
+                                            style={{backgroundColor: '#3E75CC'}}
+                                            borderRadius={0}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </ScrollView>
                     </View>
@@ -283,16 +303,16 @@ class PrematchForm extends Component {
 
     render() {
         return (
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <UnderlinedTextInput
-                    placeholder="match"
+                    placeholder='match'
                     maxLength={3}
                     width={200}
                     style={styles.matchNum}
-                    keyboardType="numeric"
-                    onChangeText={(text) => this.props.set("match", text)}
+                    keyboardType='numeric'
+                    onChangeText={(text) => this.props.set('match', text)}
                 />
-                <ColorSelect onSelect={(color) => this.props.set("color", color)} />
+                <ColorSelect onSelect={(color) => this.props.set('color', color)} />
             </View>
         );
     }
@@ -311,21 +331,21 @@ class AutonForm extends Component {
                         <Text style={styles.sectionText}>Passed</Text>
                         <Text style={styles.sectionText}>baseline</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set("passed_baseline", check, "auton")} />
+                    <Toggle onCheck={(check) => this.props.set('passed_baseline', check, 'auton')} />
                 </View>
                 <View style={styles.section}>
                     <View style={{ width: 100, alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Placed</Text>
                         <Text style={styles.sectionText}>gear</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set("placed_gear", check, "auton")} />
+                    <Toggle onCheck={(check) => this.props.set('placed_gear', check, 'auton')} />
                 </View>
                 <View style={styles.section}>
                     <View style={{ width: 100, alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Shot</Text>
                         <Text style={styles.sectionText}>ball</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set("shot_ball", check, "auton")} />
+                    <Toggle onCheck={(check) => this.props.set('shot_ball', check, 'auton')} />
                 </View>
             </View>
         );
@@ -345,29 +365,29 @@ class TeleopForm extends Component {
                         <Text style={styles.sectionText}>High</Text>
                         <Text style={styles.sectionText}>goal</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set("high", check, "teleop")} />
+                    <Toggle onCheck={(check) => this.props.set('high', check, 'teleop')} />
                 </View>
                 <View style={styles.section}>
                     <View style={{ width: 100, alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Low</Text>
                         <Text style={styles.sectionText}>goal</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set("low", check, "teleop")} />
+                    <Toggle onCheck={(check) => this.props.set('low', check, 'teleop')} />
                 </View>
 
                 <View style={[styles.section, styles.counterSection]}>
                     <Text style={styles.sectionText}>Gears on ship</Text>
-                    <Counter small={true} onChange={(val) => this.props.set("gears_on_ship", val, "teleop")} />
+                    <Counter small={true} onChange={(val) => this.props.set('gears_on_ship', val, 'teleop')} />
                 </View>
 
                 <View style={[styles.section, styles.counterSection]}>
                     <Text style={styles.sectionText}>Hoppers activated</Text>
-                    <Counter small={true} onChange={(val) => this.props.set("hoppers_activated", val, "teleop")} />
+                    <Counter small={true} onChange={(val) => this.props.set('hoppers_activated', val, 'teleop')} />
                 </View>
 
                 <View style={[styles.section, styles.counterSection, {borderBottomWidth: 0}]}>
                     <Text style={styles.sectionText}>Balls in boiler</Text>
-                    <Counter onChange={(val) => this.props.set("balls_in_boiler", val, "teleop")} />
+                    <Counter onChange={(val) => this.props.set('balls_in_boiler', val, 'teleop')} />
                 </View>
             </View>
         );
@@ -377,14 +397,6 @@ class TeleopForm extends Component {
 class EndForm extends Component {
     constructor(props) {
         super(props);
-
-        this._submit = this._submit.bind(this);
-    }
-
-    _submit() {
-        if (this.props.onSubmit) {
-            this.props.onSubmit();
-        }
     }
 
     render() {
@@ -395,30 +407,16 @@ class EndForm extends Component {
                         <View style={{ width: 100, alignItems: 'center' }}>
                             <Text style={styles.sectionText}>Climber</Text>
                         </View>
-                        <Toggle onCheck={(check) => this.props.set("climber", check, "end")} />
+                        <Toggle onCheck={(check) => this.props.set('climber', check, 'end')} />
                     </View>
                     <View style={[styles.section, styles.counterSection]}>
                         <Text style={styles.sectionText}>Fouls</Text>
-                        <Counter small={true} onChange={(val) => this.props.set("fouls", val, "end")} />
+                        <Counter small={true} onChange={(val) => this.props.set('fouls', val, 'end')} />
                     </View>
                     <View style={[styles.section, styles.counterSection, {borderBottomWidth: 0}]}>
                         <Text style={styles.sectionText}>Score</Text>
-                        <Counter onChange={(val) => this.props.set("score", val, "end")} />
+                        <Counter onChange={(val) => this.props.set('score', val, 'end')} />
                     </View>
-                </View>
-
-                <View style={[styles.section, styles.counterSection, {borderBottomWidth: 0}]}>
-                    <TouchableOpacity style={styles.submit} onPress={() => this._submit()}
-                    >
-                        <Text style={[styles.sectionText, styles.submitText]}>Submit</Text>
-                        <MaterialIcon
-                            name="arrow-right"
-                            size={25}
-                            color="#ebf7f9"
-                            style={{backgroundColor: "#3E75CC"}}
-                            borderRadius={0}
-                        />
-                    </TouchableOpacity>
                 </View>
             </View>
         );
