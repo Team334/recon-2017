@@ -15,13 +15,11 @@ import Match from './Match';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
-        shadowColor: '#000000',
-        shadowRadius: 10,
-        shadowOpacity: 0.1,
     },
     innerContainer: {
         alignItems: 'center',
+
+        marginHorizontal: 20,
     },
 });
 

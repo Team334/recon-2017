@@ -15,11 +15,11 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10,
+        marginBottom: 10,
 
-        overflow: 'hidden', flexDirection: 'column',
+        overflow: 'hidden',
     },
-    display: { 
+    display: {
         shadowColor: '#d0e1fb',
         shadowRadius: 5,
         shadowOffset: {
@@ -27,6 +27,8 @@ const styles = StyleSheet.create({
             height: 0,
         },
         shadowOpacity: 0.1,
+
+        height: 50,
 
         backgroundColor: '#3E75CC',
         borderRadius: 5,
@@ -40,7 +42,9 @@ const styles = StyleSheet.create({
         shadowRadius: 10,
         shadowOpacity: 0.1,
 
-        width: 235,
+        flex: 1,
+
+        height: 50,
 
         justifyContent: 'center',
         alignItems: 'center',
@@ -51,8 +55,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5,
 
-        height: 50,
         width: 65,
+        height: 50,
 
         alignItems: 'center',
         justifyContent: 'center',
@@ -77,9 +81,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
 
         marginTop: 5,
-
-        height: 100,
-        width: 235,
 
         flex: 1,
     },

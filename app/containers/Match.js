@@ -13,7 +13,6 @@ export default class Match extends Component {
         super(props);
     }
 
-
     render() {
         let styles = this.props.match.color == "red" ? red : blue;
 
@@ -52,7 +51,6 @@ export default class Match extends Component {
 
 const red = StyleSheet.create({
     match: {
-        width: 340,
         height: 90,
         backgroundColor: '#FE5E62',
 
@@ -66,6 +64,7 @@ const red = StyleSheet.create({
         shadowRadius: 10,
         shadowOpacity: 0.1,
 
+        paddingRight: 5,
     },
     numberContainer: {
         width: 90,
@@ -93,7 +92,7 @@ const red = StyleSheet.create({
         marginBottom: 10,
         marginLeft: 5,
 
-        width: 239,
+        flex: 1,
 
         flexDirection: 'row',
     },
@@ -129,13 +128,14 @@ const red = StyleSheet.create({
 
 const blue = StyleSheet.create({
     match: {
-        width: 340,
         height: 90,
         backgroundColor: '#5E8FDC',
 
         borderRadius: 10,
 
         marginTop: 10,
+
+        paddingRight: 5,
 
         flexDirection: 'row',
 
@@ -169,7 +169,7 @@ const blue = StyleSheet.create({
         marginBottom: 10,
         marginLeft: 5,
 
-        width: 239,
+        flex: 1,
 
         flexDirection: 'row',
     },

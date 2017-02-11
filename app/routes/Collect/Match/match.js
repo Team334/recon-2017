@@ -7,8 +7,7 @@ import {
     StyleSheet,
     Dimensions,
     TouchableOpacity
-} from 'react-native';
-
+} from 'react-native'; 
 import Networking from '../../../utils/Networking';
 
 import { connect } from 'react-redux'; import TeamSelect from '../../../containers/TeamSelect';
@@ -23,26 +22,26 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center'
-    },
-    teams: {
-        borderBottomWidth: 1,
-        borderColor: '#eee',
+
+        paddingTop: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 20,
     },
     form: {
         backgroundColor: '#5E8FDC',
 
         borderRadius: 5,
 
-        width: 300,
-        height: 420, shadowColor: '#000000',
+        flex: 1,
+
+        shadowColor: '#000000',
         shadowRadius: 10,
         shadowOpacity: 0.2
     },
     tabbar: {
         justifyContent: 'center',
         alignItems: 'center',
-
         flexDirection: 'row',
 
         shadowColor: '#000000',
@@ -61,13 +60,9 @@ const styles = StyleSheet.create({
     tab: {
         margin: 10,
     },
-    screen: {
-        width: 290,
-
-        margin: 5,
-    },
     matchNum: {
-        textAlign: 'center', height: 40,
+        textAlign: 'center',
+        height: 40,
         borderBottomColor: '#000000',
         fontSize: 30,
         color: '#ebf7f9'
@@ -81,10 +76,12 @@ const styles = StyleSheet.create({
         borderColor: '#ebf7f9',
         borderBottomWidth: 1,
 
-        paddingTop: 5,
-        paddingBottom: 5,
-        paddingLeft: 10,
-        paddingRight: 20,
+        flex: 1,
+
+        marginHorizontal: 20,
+
+        paddingVertical: 5,
+        paddingHorizontal: 10,
     },
     center: {
         flex: 1,
@@ -93,7 +90,9 @@ const styles = StyleSheet.create({
     counterSection: {
         flexDirection: 'column',
         justifyContent: 'center',
-        paddingRight: 10,
+        alignItems: 'center',
+
+        marginTop: 5, 
     },
     sectionText: {
         color: '#ebf7f9',
@@ -105,13 +104,24 @@ const styles = StyleSheet.create({
         marginRight: 5,
         bottom: 2
     },
+    submitContainer: {
+        maxHeight: 80,
+        minHeight: 50,
+
+        justifyContent: 'center', 
+        alignItems: 'center',
+
+        shadowColor: '#000000',
+        shadowRadius: 10,
+        shadowOpacity: 0.2,
+    },
     submit: {
         flexDirection: 'row',
         width: 130,
         height: 50,
         bottom: 5,
 
-        marginTop: 20,
+        marginTop: 10,
 
         padding: 5,
         borderRadius: 25,
@@ -127,6 +137,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#3E75CC',
 
         justifyContent: 'center',
+        alignSelf: 'center',
         alignItems: 'center',
     },
 });
@@ -162,8 +173,14 @@ class CollectMatch extends Component {
                     fouls: 0,
                     score: 0
                 }
-            }
+            },
         };
+    }
+
+    componentDidMount() {
+        requestAnimationFrame(() => this.refs.scrollContainer.measure((ox, oy, width, height, px, py) => {
+            this.setState({scrollChild: {width}});
+        }));
     }
 
     _submit() {
@@ -175,7 +192,7 @@ class CollectMatch extends Component {
 
     _scrollTo(index) {
         this.refs.scroll.scrollTo({
-            x: (index * 300)
+            x: (index * this.state.scrollChild.width) 
         });
     }
 
@@ -252,28 +269,26 @@ class CollectMatch extends Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <View>
+                    <View ref="scrollContainer" style={{flex: 1}}>
                         <ScrollView
                             horizontal={true}
-                            snapToInterval={300}
-                            pagingEnabled={true}
                             showsHorizontalScrollIndicator={false}
-                            style={{ height: 360 }}
+                            pagingEnabled={true}
                             ref='scroll'
                         >
-                            <View style={[styles.center, styles.screen]}>
+                            <View style={this.state.scrollChild}>
                                 <PrematchForm set={this._set} />
                             </View>
-                            <View style={styles.screen}>
+                            <View style={this.state.scrollChild}>
                                 <AutonForm set={this._set} />
                             </View>
-                            <View style={styles.screen}>
+                            <View style={this.state.scrollChild}>
                                 <TeleopForm set={this._set} />
                             </View>
-                            <View style={styles.screen}>
+                            <View style={this.state.scrollChild}>
                                 <EndForm onSubmit={() => this._submit()} set={this._set} />
-                                <View style={styles.center}>
-                                    <TouchableOpacity 
+                                <View style={styles.submitContainer}>
+                                    <TouchableOpacity
                                         style={styles.submit}
                                         onPress={() => this._submit()}
                                     >
@@ -303,7 +318,7 @@ class PrematchForm extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ScrollView contentContainerStyle={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <UnderlinedTextInput
                     placeholder='match'
                     maxLength={3}
@@ -313,7 +328,7 @@ class PrematchForm extends Component {
                     onChangeText={(text) => this.props.set('match', text)}
                 />
                 <ColorSelect onSelect={(color) => this.props.set('color', color)} />
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -325,29 +340,35 @@ class AutonForm extends Component {
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 <View style={styles.section}>
-                    <View style={{ width: 100, alignItems: 'center' }}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Passed</Text>
                         <Text style={styles.sectionText}>baseline</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set('passed_baseline', check, 'auton')} />
+                    <View style={{flex: 1, alignItems: 'center'}}>
+                        <Toggle onCheck={(check) => this.props.set('passed_baseline', check, 'auton')} />
+                    </View>
                 </View>
                 <View style={styles.section}>
-                    <View style={{ width: 100, alignItems: 'center' }}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Placed</Text>
                         <Text style={styles.sectionText}>gear</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set('placed_gear', check, 'auton')} />
+                    <View style={{flex: 1, alignItems: 'center'}}>
+                        <Toggle onCheck={(check) => this.props.set('placed_gear', check, 'auton')} />
+                    </View>
                 </View>
-                <View style={styles.section}>
-                    <View style={{ width: 100, alignItems: 'center' }}>
+                <View style={[styles.section, {borderBottomWidth: 0}]}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Shot</Text>
                         <Text style={styles.sectionText}>ball</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set('shot_ball', check, 'auton')} />
+                    <View style={{flex: 1, alignItems: 'center'}}>
+                        <Toggle onCheck={(check) => this.props.set('shot_ball', check, 'auton')} />
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -359,20 +380,24 @@ class TeleopForm extends Component {
 
     render() {
         return (
-            <View>
+            <ScrollView style={{flex: 1}}>
                 <View style={styles.section}>
-                    <View style={{ width: 100, alignItems: 'center' }}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <Text style={styles.sectionText}>High</Text>
                         <Text style={styles.sectionText}>goal</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set('high', check, 'teleop')} />
+                    <View style={{ flex: 1, alignItems: 'center' }}>
+                        <Toggle onCheck={(check) => this.props.set('high', check, 'teleop')} />
+                    </View>
                 </View>
                 <View style={styles.section}>
-                    <View style={{ width: 100, alignItems: 'center' }}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Low</Text>
                         <Text style={styles.sectionText}>goal</Text>
                     </View>
-                    <Toggle onCheck={(check) => this.props.set('low', check, 'teleop')} />
+                    <View style={{ flex: 1, alignItems: 'center' }}>
+                        <Toggle onCheck={(check) => this.props.set('low', check, 'teleop')} />
+                    </View>
                 </View>
 
                 <View style={[styles.section, styles.counterSection]}>
@@ -389,7 +414,7 @@ class TeleopForm extends Component {
                     <Text style={styles.sectionText}>Balls in boiler</Text>
                     <Counter onChange={(val) => this.props.set('balls_in_boiler', val, 'teleop')} />
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -401,24 +426,24 @@ class EndForm extends Component {
 
     render() {
         return (
-            <View style={styles.endContainer}>
-                <View>
-                    <View style={styles.section}>
-                        <View style={{ width: 100, alignItems: 'center' }}>
-                            <Text style={styles.sectionText}>Climber</Text>
-                        </View>
+            <ScrollView style={{flex: 1}}>
+                <View style={styles.section}>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
+                        <Text style={styles.sectionText}>Climber</Text>
+                    </View>
+                    <View style={{ flex: 1, alignItems: 'center' }}>
                         <Toggle onCheck={(check) => this.props.set('climber', check, 'end')} />
                     </View>
-                    <View style={[styles.section, styles.counterSection]}>
-                        <Text style={styles.sectionText}>Fouls</Text>
-                        <Counter small={true} onChange={(val) => this.props.set('fouls', val, 'end')} />
-                    </View>
-                    <View style={[styles.section, styles.counterSection, {borderBottomWidth: 0}]}>
-                        <Text style={styles.sectionText}>Score</Text>
-                        <Counter onChange={(val) => this.props.set('score', val, 'end')} />
-                    </View>
                 </View>
-            </View>
+                <View style={[styles.section, styles.counterSection]}>
+                    <Text style={styles.sectionText}>Fouls</Text>
+                    <Counter small={true} onChange={(val) => this.props.set('fouls', val, 'end')} />
+                </View>
+                <View style={[styles.section, styles.counterSection, {borderBottomWidth: 0}]}>
+                    <Text style={styles.sectionText}>Score</Text>
+                    <Counter onChange={(val) => this.props.set('score', val, 'end')} />
+                </View>
+            </ScrollView>
         );
     }
 }

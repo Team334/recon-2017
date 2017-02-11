@@ -21,6 +21,12 @@ const styles = StyleSheet.create({
         fontSize: 20, 
 
         paddingBottom: 4,
+    },
+    control: {
+        backgroundColor: "#5E8FDC", 
+        textAlign: 'center',
+
+        lineHeight: 35,
     }
 });
 
@@ -73,7 +79,7 @@ export default class Counter extends Component {
                             name="chevron-left"
                             size={35}
                             color="#ebf7f9"
-                            style={{backgroundColor: "#5E8FDC"}}
+                            style={styles.control}
                             borderRadius={0}
                         />
                     </TouchableOpacity>
@@ -87,7 +93,7 @@ export default class Counter extends Component {
                             name="chevron-right"
                             size={35}
                             color="#ebf7f9"
-                            style={{backgroundColor: "#5E8FDC"}}
+                            style={styles.control}
                             borderRadius={0}
                         />
                     </TouchableOpacity>
@@ -103,7 +109,7 @@ export default class Counter extends Component {
                             name="chevron-double-left"
                             size={35}
                             color="#ebf7f9"
-                            style={{backgroundColor: "#5E8FDC"}}
+                            style={styles.control}
                             borderRadius={0}
                         />
                     </TouchableOpacity>
@@ -114,7 +120,7 @@ export default class Counter extends Component {
                             name="chevron-left"
                             size={35}
                             color="#ebf7f9"
-                            style={{backgroundColor: "#5E8FDC"}}
+                            style={styles.control}
                             borderRadius={0}
                         />
                     </TouchableOpacity>
@@ -128,7 +134,7 @@ export default class Counter extends Component {
                             name="chevron-right"
                             size={35}
                             color="#ebf7f9"
-                            style={{backgroundColor: "#5E8FDC"}}
+                            style={styles.control}
                             borderRadius={0}
                         />
                     </TouchableOpacity>
@@ -139,7 +145,7 @@ export default class Counter extends Component {
                             name="chevron-double-right"
                             size={35}
                             color="#ebf7f9"
-                            style={{backgroundColor: "#5E8FDC"}}
+                            style={styles.control}
                             borderRadius={0}
                         />
                     </TouchableOpacity>
