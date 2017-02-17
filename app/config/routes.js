@@ -7,6 +7,8 @@ import CollectChoices from '../routes/Collect/Choices/choices';
 import CollectTeam from '../routes/Collect/Team/team';
 import CollectMatch from '../routes/Collect/Match/match';
 
+import AnalyzeMain from '../routes/Analyze/Main/main';
+
 const routes = {
     WELCOME: {
         render: (navigator) => {
@@ -19,6 +21,7 @@ const routes = {
     },
     COLLECT: {
         CHOICES: {
+            name: "choices",
             render: (navigator) => {
                 return <CollectChoices navigator={navigator} />;
             }
@@ -31,6 +34,13 @@ const routes = {
         MATCH: {
             render: (navigator, conn) => {
                 return <CollectMatch conn={conn} navigator={navigator} />;
+            }
+        }
+    },
+    ANALYZE: {
+        MAIN: {
+            render: (navigator, conn) => {
+                return <AnalyzeMain conn={conn} navigator={navigator} />;
             }
         }
     }

@@ -21,9 +21,6 @@ class Connection extends WebSocket {
 
         this.onopen = () => {
             this.update();
-            setInterval(() => {
-                this.update();
-            }, 1000 * 10);
         };
     }
 
@@ -32,7 +29,7 @@ class Connection extends WebSocket {
             return;
         }
 
-        super.send(JSON.stringify(packet)); 
+        super.send(JSON.stringify(packet));
     }
 
     update() {
@@ -67,11 +64,11 @@ class Connection extends WebSocket {
             this._handleUpdate(data);
             break;
         }
+
+        this._lastUpdate = data.date;
     }
 
     _handleUpdate(update) {
-        this._lastUpdate = update.date;
-
         update.data.forEach((u) => {
             switch (u.action) {
             case "new_match":

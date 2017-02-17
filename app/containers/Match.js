@@ -140,8 +140,12 @@ const blue = StyleSheet.create({
         flexDirection: 'row',
 
         shadowColor: '#000000',
-        shadowRadius: 10,
-        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        shadowOpacity: 0.4,
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        }
     },
     numberContainer: {
         width: 90,

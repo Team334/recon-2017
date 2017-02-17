@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import {
     StyleSheet,
     Image,
-    Button,
     TextInput,
-    View
+    View,
+    Text,
+    TouchableOpacity
 } from 'react-native';
 
 import { connect } from 'react-redux'; 
@@ -32,9 +33,8 @@ const styles = StyleSheet.create({
         borderBottomColor: '#000000',
     },
     button: {
-        backgroundColor: 'skyblue',
-        color: 'white',
-        fontSize: 100
+        color: '#1E5AB8',
+        fontSize: 16
     }
 });
 
@@ -50,13 +50,15 @@ export default class Welcome extends Component {
                     placeholder="name"
                     width={200}
                     maxLength={20}
+                    underlineColorAndroid="transparent"
                     style={styles.input}
                 />
-                <Button
-                    title="enter"
-                    style={styles.button}
+                <TouchableOpacity
+                    style={{margin: 5}}
                     onPress={() => this.props.navigator.push(Routes.MAIN)}
-                />
+                >
+                    <Text style={styles.button}>enter</Text>
+                </TouchableOpacity>
             </View>
         );
     }

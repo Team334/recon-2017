@@ -5,15 +5,18 @@ import {
     Image,
     View,
     Modal,
-    TouchableOpacity, Navigator, Dimensions
-} from 'react-native';
-
+    Animated,
+    Navigator,
+    Dimensions,
+    TouchableOpacity,
+} from 'react-native'; 
 import Networking from '../../utils/Networking';
 
 import { connect } from 'react-redux';
 
 import Routes from '../../config/routes';
-import Matches from '../../containers/Matches'; 
+import Matches from '../../containers/Matches';
+import Search from '../../components/Search';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -25,24 +28,28 @@ class Main extends Component {
         this.toggleModal = this.toggleModal.bind(this);
         this.requireBackButton = this.requireBackButton.bind(this);
         this.updateBack = this.updateBack.bind(this);
+        this._sort = this._sort.bind(this);
 
         this.state = {
-            collect: false,
-            back: false, 
+            modal: false,
+            back: false,
+
+            sort: {
+                type: "match",
+                query: "",
+            },
         };
 
         this.conn = Networking.connect(this.props.dispatch);
     }
 
-    toggleModal = (state) => {
-        this.setState({
-            collect: state
-        });
+    toggleModal = (modal, mode = this.state.mode) => {
+        let scene = mode == "Collect" ? Routes.COLLECT.CHOICES : Routes.ANALYZE.MAIN;
+        this.setState({modal, mode, scene});
     };
 
     requireBackButton = () => {
-        if (this.state.back) {
-            return (
+        if (this.state.back) { return (
                 <MaterialIcon.Button
                     name="chevron-left"
                     size={35}
@@ -56,14 +63,22 @@ class Main extends Component {
             return (
                 <MaterialIcon.Button name="chevron-left"
                     size={35}
-                    color="#1E5AB8" 
-                    style={{backgroundColor: "#1E5AB8"}} 
-                    borderRadius={0} 
-                    onPress={() => this.refs.innerNav.pop()} 
+                    color="#1E5AB8"
+                    style={{backgroundColor: "#1E5AB8"}}
+                    borderRadius={0}
+                    onPress={() => this.refs.innerNav.pop()}
                 />
             );
         }
     };
+
+    _sort(query) {
+        if (this.state.sort.query == query) return;
+
+        this.setState({
+            sort: Object.assign({}, this.state.sort, {query})
+        });
+    }
 
     updateBack = () => {
         this.setState({
@@ -77,14 +92,14 @@ class Main extends Component {
                 <Modal
                     animationType={"slide"}
                     transparent={true}
-                    visible={this.state.collect}
+                    visible={this.state.modal}
                     onRequestClose={() => this.toggleModal(false)}
                 >
                     <View style={styles.fixed}>
                         <View style={styles.modal}>
                             <View style={styles.closeContainer}>
                                 {this.requireBackButton()}
-                                <Text style={styles.modalTitle}> Collect </Text>
+                                <Text style={styles.modalTitle}> {this.state.mode} </Text>
                                 <MaterialIcon.Button
                                     name="close"
                                     size={35}
@@ -97,7 +112,7 @@ class Main extends Component {
 
                             <Navigator
                                 ref="innerNav"
-                                initialRoute={Routes.COLLECT.CHOICES}
+                                initialRoute={this.state.scene}
                                 renderScene={(route, navigator) => {
                                     return route.render(navigator, this.conn);
                                 }}
@@ -106,18 +121,17 @@ class Main extends Component {
                                         ...Navigator.SceneConfigs.HorizontalSwipeJumpFromRight,
                                         gestures: {},
                                     }
-                                }} 
+                                }}
                                 onDidFocus={(e) => this.updateBack()}
                             />
                         </View>
                     </View>
                 </Modal>
-                <View style={styles.matches}>
-                    <Matches conn={this.conn} />
-                </View>
+                <Search onSearch={(input) => this._sort(input)} />
+                <Matches conn={this.conn} sort={this.state.sort} />
                 <View style={styles.nav}>
                     <View style={styles.navButton}>
-                        <TouchableOpacity onPress={() => this.toggleModal(true)}>
+                        <TouchableOpacity onPress={() => this.toggleModal(true, "Collect")}>
                             <View style={styles.buttonContainer}>
                                 <MaterialIcon
                                     name="pen"
@@ -134,7 +148,7 @@ class Main extends Component {
                          />
                     </View>
                     <View style={styles.navButton}>
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={() => this.toggleModal(true, "Analyze")}>
                             <View style={styles.buttonContainer}>
                                 <AwesomeIcon
                                     name="bar-chart-o"
@@ -157,13 +171,37 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
     },
+    topBar: {
+        marginTop: 10,
+        marginHorizontal: 20,
+        height: 20,
+
+        backgroundColor: '#5E8FDC',
+
+        flex: 1,
+        flexDirection: 'row',
+
+        shadowColor: '#000000',
+        shadowRadius: 3,
+        shadowOpacity: 0.1,
+
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        borderRadius: 10,
+    },
+    search: {
+        flex: 1,
+
+        backgroundColor: '#ebf7f9',
+    },
     fixed: {
         position: 'absolute',
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
 
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     modal: {
         bottom: 40,
@@ -176,6 +214,8 @@ const styles = StyleSheet.create({
         shadowColor: '#000000',
         shadowRadius: 10,
         shadowOpacity: 0.2,
+
+        elevation: 5,
 
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
@@ -205,7 +245,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 80,
         height: 80,
-        bottom: 10
+        bottom: 10,
     },
     nav: {
         position: 'absolute',
@@ -221,7 +261,11 @@ const styles = StyleSheet.create({
 
         shadowColor: '#000000',
         shadowRadius: 10,
-        shadowOpacity: 0.05
+        shadowOpacity: 0.1,
+
+        elevation: 20,
+
+        zIndex: 1,
     },
     navButton: {
         width: 110,
@@ -233,8 +277,14 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'center',
     },
-    matches: {
-        height: Dimensions.get('window').height - 70,
+    horizontal: {
+        shadowColor: '#000000',
+        shadowRadius: 10,
+        shadowOpacity: 1.0,
 
+        height: 2,
+        backgroundColor: '#cbcbcb',
+
+        marginHorizontal: 20,
     }
 });

@@ -7,13 +7,14 @@ import {
     StyleSheet,
     Dimensions,
     TouchableOpacity
-} from 'react-native'; 
+} from 'react-native';
 import Networking from '../../../utils/Networking';
 
 import { connect } from 'react-redux'; import TeamSelect from '../../../containers/TeamSelect';
 import { addMatch } from '../../../actions/match';
 
-import UnderlinedTextInput from '../../../components/UnderlinedTextInput'; import ColorSelect from '../../../components/ColorSelect';
+import UnderlinedTextInput from '../../../components/UnderlinedTextInput';
+import ColorSelect from '../../../components/ColorSelect';
 import Toggle from '../../../components/Toggle';
 import Counter from '../../../components/Counter';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -70,9 +71,6 @@ const styles = StyleSheet.create({
     section: {
         flexDirection: 'row',
 
-        justifyContent: 'space-between',
-        alignItems: 'center',
-
         borderColor: '#ebf7f9',
         borderBottomWidth: 1,
 
@@ -83,6 +81,14 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 10,
     },
+    toggleSection: {
+        flex: 1,
+
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        alignSelf: 'stretch',
+    },
     center: {
         flex: 1,
         alignItems: 'center',
@@ -92,7 +98,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
 
-        marginTop: 5, 
+        marginTop: 5,
     },
     sectionText: {
         color: '#ebf7f9',
@@ -108,12 +114,11 @@ const styles = StyleSheet.create({
         maxHeight: 80,
         minHeight: 50,
 
-        justifyContent: 'center', 
+        justifyContent: 'center',
         alignItems: 'center',
 
-        shadowColor: '#000000',
-        shadowRadius: 10,
-        shadowOpacity: 0.2,
+        borderBottomRightRadius: 5,
+        borderBottomLeftRadius: 5,
     },
     submit: {
         flexDirection: 'row',
@@ -192,7 +197,7 @@ class CollectMatch extends Component {
 
     _scrollTo(index) {
         this.refs.scroll.scrollTo({
-            x: (index * this.state.scrollChild.width) 
+            x: (index * this.state.scrollChild.width)
         });
     }
 
@@ -342,29 +347,29 @@ class AutonForm extends Component {
         return (
             <ScrollView>
                 <View style={styles.section}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={styles.toggleSection}>
                         <Text style={styles.sectionText}>Passed</Text>
                         <Text style={styles.sectionText}>baseline</Text>
                     </View>
-                    <View style={{flex: 1, alignItems: 'center'}}>
+                    <View style={styles.toggleSection}>
                         <Toggle onCheck={(check) => this.props.set('passed_baseline', check, 'auton')} />
                     </View>
                 </View>
                 <View style={styles.section}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Placed</Text>
                         <Text style={styles.sectionText}>gear</Text>
                     </View>
-                    <View style={{flex: 1, alignItems: 'center'}}>
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <Toggle onCheck={(check) => this.props.set('placed_gear', check, 'auton')} />
                     </View>
                 </View>
                 <View style={[styles.section, {borderBottomWidth: 0}]}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Shot</Text>
                         <Text style={styles.sectionText}>ball</Text>
                     </View>
-                    <View style={{flex: 1, alignItems: 'center'}}>
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <Toggle onCheck={(check) => this.props.set('shot_ball', check, 'auton')} />
                     </View>
                 </View>
@@ -382,20 +387,20 @@ class TeleopForm extends Component {
         return (
             <ScrollView style={{flex: 1}}>
                 <View style={styles.section}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.sectionText}>High</Text>
                         <Text style={styles.sectionText}>goal</Text>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Toggle onCheck={(check) => this.props.set('high', check, 'teleop')} />
                     </View>
                 </View>
                 <View style={styles.section}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Low</Text>
                         <Text style={styles.sectionText}>goal</Text>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Toggle onCheck={(check) => this.props.set('low', check, 'teleop')} />
                     </View>
                 </View>
@@ -415,8 +420,7 @@ class TeleopForm extends Component {
                     <Counter onChange={(val) => this.props.set('balls_in_boiler', val, 'teleop')} />
                 </View>
             </ScrollView>
-        );
-    }
+        ); }
 }
 
 class EndForm extends Component {
@@ -428,7 +432,7 @@ class EndForm extends Component {
         return (
             <ScrollView style={{flex: 1}}>
                 <View style={styles.section}>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.sectionText}>Climber</Text>
                     </View>
                     <View style={{ flex: 1, alignItems: 'center' }}>

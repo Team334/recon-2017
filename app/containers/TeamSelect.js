@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
     },
     team: {
         borderTopLeftRadius: 5,
-        borderBottomLeftRadius: 5,
-
+        borderBottomLeftRadius: 5, 
         shadowColor: '#000000',
         shadowRadius: 10,
         shadowOpacity: 0.1,
