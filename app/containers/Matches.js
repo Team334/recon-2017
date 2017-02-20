@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    Dimensions,
+    Dimensions, 
     ListView,
     StyleSheet,
     ScrollView,
@@ -11,6 +11,7 @@ import {
 
 import { connect } from 'react-redux';
 
+import * as Progress from 'react-native-progress';
 import Match from './Match';
 
 const styles = StyleSheet.create({
@@ -33,9 +34,9 @@ class Matches extends Component {
     constructor(props) {
         super(props);
 
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            matches: this.ds.cloneWithRows(this._filter(this.props.matches, props.sort)),
+            matches: ds.cloneWithRows(this._filter(this.props.matches, props.sort)),
             ready: true,
         };
 
@@ -49,7 +50,7 @@ class Matches extends Component {
         this.setState({ready: false}, () =>
             InteractionManager.runAfterInteractions(() =>
                 this.setState({
-                    matches: this.ds.cloneWithRows(this._filter(nextProps.matches, nextProps.sort)),
+                    matches: this.state.matches.cloneWithRows(this._filter(nextProps.matches, nextProps.sort)),
                     ready: true,
                 })
             )
@@ -73,7 +74,17 @@ class Matches extends Component {
     }
 
     _renderMatch(match) {
-        return <Match match={match} />;
+        if (match == undefined) {
+            return null;
+        }
+
+        return (
+            <Match
+                match={match}
+                onMatchPress={this.props.onMatchPress}
+                onTeamPress={this.props.onTeamPress}
+            />
+        );
     }
 
     render() {
@@ -86,7 +97,11 @@ class Matches extends Component {
                 style={styles.container}
                 contentContainerStyle={styles.innerContainer}
             />
-        ) : null;
+        ) : (
+            <View style={{justifyContent: 'center', alignItems: 'center', zIndex: -1, flex: 1, top: -50}}>
+                <Progress.CircleSnail color={'#5E8FDC'} />
+            </View>
+        );
     }
 }
 

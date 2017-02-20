@@ -21,7 +21,6 @@ const routes = {
     },
     COLLECT: {
         CHOICES: {
-            name: "choices",
             render: (navigator) => {
                 return <CollectChoices navigator={navigator} />;
             }
@@ -42,7 +41,12 @@ const routes = {
             render: (navigator, conn) => {
                 return <AnalyzeMain conn={conn} navigator={navigator} />;
             }
-        }
+        },
+        TEAM: {
+            render: (navigator, conn, team) => {
+                return <AnalyzeTeam conn={conn} navigator={navigator} team={team} />
+            }
+        } 
     }
 };
 

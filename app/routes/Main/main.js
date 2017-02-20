@@ -41,6 +41,19 @@ class Main extends Component {
         };
 
         this.conn = Networking.connect(this.props.dispatch);
+
+        this._onMatchPress = this._onMatchPress.bind(this);
+        this._onTeamPress = this._onTeamPress.bind(this);
+    }
+
+    _onMatchPress(match) {
+        this.refs.search.setText("" + match);
+        this._sort(match);
+    }
+
+    _onTeamPress(team) {
+        this.setState({analyzedTeam: team});
+        this.toggleModal(true, "Analyze");
     }
 
     toggleModal = (modal, mode = this.state.mode) => {
@@ -49,7 +62,8 @@ class Main extends Component {
     };
 
     requireBackButton = () => {
-        if (this.state.back) { return (
+        if (this.state.back) { 
+            return (
                 <MaterialIcon.Button
                     name="chevron-left"
                     size={35}
@@ -109,7 +123,6 @@ class Main extends Component {
                                     onPress={() => this.toggleModal(false)}
                                 />
                             </View>
-
                             <Navigator
                                 ref="innerNav"
                                 initialRoute={this.state.scene}
@@ -127,8 +140,13 @@ class Main extends Component {
                         </View>
                     </View>
                 </Modal>
-                <Search onSearch={(input) => this._sort(input)} />
-                <Matches conn={this.conn} sort={this.state.sort} />
+                <Search ref="search" onSearch={(input) => this._sort(input)} />
+                <Matches
+                    conn={this.conn}
+                    sort={this.state.sort}
+                    onMatchPress={this._onMatchPress}
+                    onTeamPress={this._onTeamPress}
+                />
                 <View style={styles.nav}>
                     <View style={styles.navButton}>
                         <TouchableOpacity onPress={() => this.toggleModal(true, "Collect")}>

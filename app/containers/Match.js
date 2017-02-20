@@ -6,6 +6,7 @@ import {
     ListView,
     StyleSheet,
     ScrollView,
+    TouchableOpacity,
 } from 'react-native';
 
 export default class Match extends Component {
@@ -19,8 +20,12 @@ export default class Match extends Component {
         return (
             <View style={styles.match}>
                 <View style={styles.numberContainer}>
-                    <Text style={styles.number}>{this.props.match.team}</Text>
-                    <Text style={styles.matchNum}>#{this.props.match.match}</Text>
+                    <TouchableOpacity onPress={() => this.props.onTeamPress(this.props.match.team)}>
+                        <Text style={styles.number}>{this.props.match.team}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.onMatchPress(this.props.match.match)}>
+                        <Text style={styles.matchNum}>#{this.props.match.match}</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.content}>
                     <ScrollView

@@ -7,8 +7,7 @@ import {
     TextInput
 } from 'react-native';
 
-import OcticonsIcon from 'react-native-vector-icons/Octicons';
-
+import OcticonsIcon from 'react-native-vector-icons/Octicons'; 
 const styles = StyleSheet.create({
     container: {
         marginTop: 10,
@@ -66,7 +65,7 @@ export default class Search extends Component {
     constructor(props) {
         super(props);
 
-        this.state ={
+        this.state = {
             bg: new Animated.Value(0),
             text: "",
             focused: false,
@@ -74,17 +73,19 @@ export default class Search extends Component {
 
         this._focus = this._focus.bind(this);
         this._blur = this._blur.bind(this);
-        this._onText = this._onText.bind(this);
-
+        this.setText = this.setText.bind(this);
     }
 
-    _onText(text) {
+    setText(text) {
         this.setState({
             text
         });
     }
 
     _focus(b) {
+        if (b) {
+            this.setText("");
+        }
         Animated.timing(this.state.bg, {
             toValue: b ? 100 : 0,
             duration: b ? 300 : 800,
@@ -127,17 +128,20 @@ export default class Search extends Component {
                         blurOnSubmit={false}
                         onFocus={() => this._focus(true)}
                         onBlur={() => this._blur(false)}
-                        onChangeText={this._onText}
+                        onChangeText={this.setText}
+                        value={this.state.text}
                         style={[styles.input, {color: color}]}
                         placeholder="####"
                     />
                     <View style={[styles.iconContainer, {borderColor: color}]}>
-                        <OcticonsIcon
-                            name="search"
-                            size={26}
-                            color={color}
-                            style={{backgroundColor: "transparent"}}
-                        />
+                        <TouchableOpacity onPress={() => this.refs.input.blur()}>
+                            <OcticonsIcon
+                                name="search"
+                                size={26}
+                                color={color}
+                                style={{backgroundColor: "transparent"}}
+                            />
+                        </TouchableOpacity>
                     </View>
                 </Animated.View>
             </TouchableOpacity>
