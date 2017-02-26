@@ -8,6 +8,7 @@ import CollectTeam from '../routes/Collect/Team/team';
 import CollectMatch from '../routes/Collect/Match/match';
 
 import AnalyzeMain from '../routes/Analyze/Main/main';
+import AnalyzeTeam from '../routes/Analyze/Team/team';
 
 const routes = {
     WELCOME: {

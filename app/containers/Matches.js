@@ -3,9 +3,7 @@ import {
     View,
     Text,
     Dimensions, 
-    ListView,
-    StyleSheet,
-    ScrollView,
+    ListView, StyleSheet, ScrollView,
     InteractionManager,
 } from 'react-native';
 

@@ -9,7 +9,7 @@ import {
     Navigator,
     Dimensions,
     TouchableOpacity,
-} from 'react-native'; 
+} from 'react-native';
 import Networking from '../../utils/Networking';
 
 import { connect } from 'react-redux';
@@ -53,16 +53,15 @@ class Main extends Component {
 
     _onTeamPress(team) {
         this.setState({analyzedTeam: team});
-        this.toggleModal(true, "Analyze");
+        this.toggleModal(true, "Team " + team, Routes.ANALYZE.TEAM);
     }
 
-    toggleModal = (modal, mode = this.state.mode) => {
-        let scene = mode == "Collect" ? Routes.COLLECT.CHOICES : Routes.ANALYZE.MAIN;
+    toggleModal = (modal, mode, scene) => {
         this.setState({modal, mode, scene});
     };
 
     requireBackButton = () => {
-        if (this.state.back) { 
+        if (this.state.back) {
             return (
                 <MaterialIcon.Button
                     name="chevron-left"
@@ -127,7 +126,7 @@ class Main extends Component {
                                 ref="innerNav"
                                 initialRoute={this.state.scene}
                                 renderScene={(route, navigator) => {
-                                    return route.render(navigator, this.conn);
+                                    return route.render(navigator, this.conn, this.state.analyzedTeam);
                                 }}
                                 configureScene={(route, routeStack) => {
                                     return {
@@ -149,7 +148,7 @@ class Main extends Component {
                 />
                 <View style={styles.nav}>
                     <View style={styles.navButton}>
-                        <TouchableOpacity onPress={() => this.toggleModal(true, "Collect")}>
+                        <TouchableOpacity onPress={() => this.toggleModal(true, "Collect", Routes.COLLECT.CHOICES)}>
                             <View style={styles.buttonContainer}>
                                 <MaterialIcon
                                     name="pen"
@@ -166,7 +165,7 @@ class Main extends Component {
                          />
                     </View>
                     <View style={styles.navButton}>
-                        <TouchableOpacity onPress={() => this.toggleModal(true, "Analyze")}>
+                        <TouchableOpacity onPress={() => this.toggleModal(true, "Analyze", Routes.ANALYZE.MAIN)}>
                             <View style={styles.buttonContainer}>
                                 <AwesomeIcon
                                     name="bar-chart-o"
