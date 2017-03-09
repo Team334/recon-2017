@@ -38,9 +38,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5,
 
-        justifyContent: 'center',
-        alignItems: 'center',
-
         zIndex: 1,
     },
     content: {
@@ -53,6 +50,8 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 5,
 
         borderRadius: 5,
+
+        backgroundColor: 'transparent',
     },
     bar: {
         borderTopRightRadius: 15,
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
         shadowColor: '#000000',
-        shadowRadius: 2,
+        shadowRadius: 1,
         shadowOpacity: 0.1,
         shadowOffset: {
             width: 0,
@@ -72,10 +71,12 @@ const styles = StyleSheet.create({
         elevation: 1,
 
         height: 18,
+
     },
     amount: {
         color: '#ebf7f9',
         fontSize: 15,
+        fontWeight: '600',
 
         left: 0,
 
@@ -89,6 +90,33 @@ const styles = StyleSheet.create({
     }
 });
 
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex({r, g, b}) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+function hexToRGB(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+function tint(color) {
+    var rgb = hexToRGB(color);
+    for (let i of ['r', 'g', 'b']) {
+        rgb[i] = rgb[i] + parseInt((255 - rgb[i]) * 0.96);
+    }
+
+    return rgbToHex(rgb);
+}
+
 export default class Bar extends Component {
     constructor(props) {
         super(props);
@@ -97,9 +125,12 @@ export default class Bar extends Component {
             hint: false,
             pos: new Animated.Value(0),
             opacity: new Animated.Value(1),
+            displayHint: new Animated.Value(0),
+            length: new Animated.Value(0),
             container: {
                 paddingLeft: 45
             },
+            bgColor: tint(this.props.color),
         };
 
         this.state.opacity.addListener(({value}) => {
@@ -108,9 +139,11 @@ export default class Bar extends Component {
             const side = "padding" + (this.state.hint ? "Right" : "Left");
             this.setState({
                 content: !this.state.hint ? (
-                    <View style={[styles.bar, this.state.bar]}>
-                        <Text style={styles.amount}>{this.props.amount}</Text>
-                    </View>
+                    <Animated.View style={[styles.bar, {backgroundColor: this.props.color, width: this.state.length}]}>
+                        <Animated.View style={{opacity: this.state.displayHint}}>
+                            <Text style={styles.amount}>{this.props.amount}</Text>
+                        </Animated.View>
+                    </Animated.View>
                 ) : (
                     <Text style={styles.hint}>{this.props.hint}</Text>
                 ),
@@ -148,26 +181,29 @@ export default class Bar extends Component {
         requestAnimationFrame(() => this.refs.content.measure((ox, oy, width, height, px, py) => {
             this.setState({
                 width,
-                bar: {
-                    width: this.props.amount / this.props.full * (width - 5),
-                    backgroundColor: this.props.color,
-                },
-            }, () => this.setState({
                 content: (
-                    <View style={[styles.bar, this.state.bar]}>
+                    <Animated.View style={[styles.bar, {backgroundColor: this.props.color, width: this.state.length}]}>
+                        <Animated.View style={{opacity: this.state.displayHint}}>
                             <Text style={styles.amount}>{this.props.amount}</Text>
-                    </View>
+                        </Animated.View>
+                    </Animated.View>
                 )
-            }));
+            }, () => Animated.timing(this.state.length, {
+                toValue: this.props.amount / this.props.full * (width - 5),
+                duration: 1000,
+            }).start(() => Animated.timing(this.state.displayHint, {
+                toValue: 1,
+                duration: 300,
+            }).start()));
         }));
     }
 
     render() {
         return (
-            <View style={[styles.container, this.state.container]}>
+            <View style={[styles.container, this.state.container, {backgroundColor: this.state.bgColor}]}>
                 <Animated.View style={[styles.icon, {left: this.state.pos}]}>
-                    <TouchableOpacity onPress={this._toggleHint}>
-                    {this.props.icon}
+                    <TouchableOpacity style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} onPress={this._toggleHint}>
+                        {this.props.icon}
                     </TouchableOpacity>
                 </Animated.View>
                 <Animated.View style={[styles.content, {opacity: this.state.opacity}]}>
