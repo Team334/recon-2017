@@ -83,11 +83,10 @@ const styles = StyleSheet.create({
     },
     toggleSection: {
         flex: 1,
+        width: 0,
 
         justifyContent: 'center',
         alignItems: 'center',
-
-        alignSelf: 'stretch',
     },
     center: {
         flex: 1,
@@ -356,20 +355,20 @@ class AutonForm extends Component {
                     </View>
                 </View>
                 <View style={styles.section}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.toggleSection}>
                         <Text style={styles.sectionText}>Placed</Text>
                         <Text style={styles.sectionText}>gear</Text>
                     </View>
-                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={styles.toggleSection}>
                         <Toggle onCheck={(check) => this.props.set('placed_gear', check, 'auton')} />
                     </View>
                 </View>
                 <View style={[styles.section, {borderBottomWidth: 0}]}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.toggleSection}>
                         <Text style={styles.sectionText}>Shot</Text>
                         <Text style={styles.sectionText}>ball</Text>
                     </View>
-                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={styles.toggleSection}>
                         <Toggle onCheck={(check) => this.props.set('shot_ball', check, 'auton')} />
                     </View>
                 </View>
@@ -387,20 +386,20 @@ class TeleopForm extends Component {
         return (
             <ScrollView style={{flex: 1}}>
                 <View style={styles.section}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.toggleSection}>
                         <Text style={styles.sectionText}>High</Text>
                         <Text style={styles.sectionText}>goal</Text>
                     </View>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.toggleSection}>
                         <Toggle onCheck={(check) => this.props.set('high', check, 'teleop')} />
                     </View>
                 </View>
                 <View style={styles.section}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.toggleSection}>
                         <Text style={styles.sectionText}>Low</Text>
                         <Text style={styles.sectionText}>goal</Text>
                     </View>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.toggleSection}>
                         <Toggle onCheck={(check) => this.props.set('low', check, 'teleop')} />
                     </View>
                 </View>
@@ -432,10 +431,10 @@ class EndForm extends Component {
         return (
             <ScrollView style={{flex: 1}}>
                 <View style={styles.section}>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.toggleSection}>
                         <Text style={styles.sectionText}>Climber</Text>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center' }}>
+                    <View style={styles.toggleSection}>
                         <Toggle onCheck={(check) => this.props.set('climber', check, 'end')} />
                     </View>
                 </View>
