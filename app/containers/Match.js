@@ -20,10 +20,10 @@ export default class Match extends Component {
         return (
             <View style={styles.match}>
                 <View style={styles.numberContainer}>
-                    <TouchableOpacity onPress={() => this.props.onTeamPress(this.props.match.team)}>
+                    <TouchableOpacity onPress={() => this.props.onTeamPress && this.props.onTeamPress(this.props.match.team)}>
                         <Text style={styles.number}>{this.props.match.team}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.onMatchPress(this.props.match.match)}>
+                    <TouchableOpacity onPress={() => this.props.onMatchPress && this.props.onMatchPress(this.props.match.match)}>
                         <Text style={styles.matchNum}>#{this.props.match.match}</Text>
                     </TouchableOpacity>
                 </View>
@@ -211,5 +211,3 @@ const blue = StyleSheet.create({
         textAlign: 'center',
     }
 });
-
-

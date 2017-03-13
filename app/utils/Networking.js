@@ -56,6 +56,10 @@ class Connection extends WebSocket {
         });
     }
 
+    requestAnalytics(team) {
+
+    }
+
     _handle(raw) {
         const data = JSON.parse(raw.data);
 

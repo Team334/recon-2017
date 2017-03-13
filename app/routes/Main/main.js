@@ -3,9 +3,7 @@ import {
     StyleSheet,
     Text,
     Image,
-    View,
-    Modal,
-    Animated,
+    View, Modal, Animated,
     Navigator,
     Dimensions,
     TouchableOpacity,
@@ -140,12 +138,15 @@ class Main extends Component {
                     </View>
                 </Modal>
                 <Search ref="search" onSearch={(input) => this._sort(input)} />
-                <Matches
-                    conn={this.conn}
-                    sort={this.state.sort}
-                    onMatchPress={this._onMatchPress}
-                    onTeamPress={this._onTeamPress}
-                />
+                <View style={styles.matchesContainer}>
+                    <Matches
+                        conn={this.conn}
+                        sort={this.state.sort}
+                        hideLoader={false}
+                        onMatchPress={this._onMatchPress}
+                        onTeamPress={this._onTeamPress}
+                    />
+                </View>
                 <View style={styles.nav}>
                     <View style={styles.navButton}>
                         <TouchableOpacity onPress={() => this.toggleModal(true, "Collect", Routes.COLLECT.CHOICES)}>
@@ -211,6 +212,12 @@ const styles = StyleSheet.create({
         flex: 1,
 
         backgroundColor: '#ebf7f9',
+    },
+    matchesContainer: {
+        flex: 1,
+
+        marginTop: 5,
+        marginBottom: 70,
     },
     fixed: {
         position: 'absolute',

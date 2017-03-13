@@ -15,9 +15,6 @@ import Match from './Match';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
-        marginTop: 5,
-        marginBottom: 70,
     },
     innerContainer: {
         alignItems: 'center',
@@ -95,11 +92,11 @@ class Matches extends Component {
                 style={styles.container}
                 contentContainerStyle={styles.innerContainer}
             />
-        ) : (
+        ) : !this.props.hideLoader ? (
             <View style={{justifyContent: 'center', alignItems: 'center', zIndex: -1, flex: 1, top: -50}}>
                 <Progress.CircleSnail color={'#5E8FDC'} />
             </View>
-        );
+        ) : null ;
     }
 }
 
