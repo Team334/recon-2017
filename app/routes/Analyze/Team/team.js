@@ -93,9 +93,9 @@ class AnalyzeTeam extends Component {
                 <Line 
                     key={(id++).toString()}
                     x1="15"
-                    y1={(i * ((this.state.height - 30) / 16) + 20).toString()}
+                    y1={(i * ((this.state.height - 30) / 15) + 15).toString()}
                     x2={(this.state.width - 15).toString()}
-                    y2={(i * ((this.state.height - 30) / 16) + 20).toString()}
+                    y2={(i * ((this.state.height - 30) / 15) + 15).toString()}
                     stroke="#5E8FDC"
                     strokeWidth="1"
                     strokeLinecap="round"
@@ -126,12 +126,14 @@ class AnalyzeTeam extends Component {
             max: 4,
         }];
 
+        const xOffset = (this.state.width - 30) / (this.props.matches.length / 2);
         for (let i = 0; i < lines.length; i++) {
             let path = "";
 
             for (let j = 0; j < this.props.matches.length; j++) {
-                let y = (this.state.height - (this.props.matches[j][lines[i].mode][lines[i].field] / lines[i].max) * (this.state.height - 30)) - 21.5;
-                let x = ((this.props.matches.length - j) * ((this.state.width - 40) / this.props.matches.length));
+                let percentage = this.props.matches[j][lines[i].mode][lines[i].field] / lines[i].max;
+                let y = (this.state.height - percentage * (this.state.height - 30)) - 15;
+                let x = ((this.props.matches.length - 1 - j) * ((this.state.width - 60) / (this.props.matches.length - 1))) + 30;
                 path += x + "," + y + " ";
             }
 
@@ -147,7 +149,7 @@ class AnalyzeTeam extends Component {
             );
         }
 
-        return elements; 
+        return elements;
     }
 
     render() {

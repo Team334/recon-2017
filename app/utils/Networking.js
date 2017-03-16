@@ -62,6 +62,7 @@ class Connection extends WebSocket {
 
     _handle(raw) {
         const data = JSON.parse(raw.data);
+        console.warn(raw.data);
 
         switch (data.action) {
         case "refresh":
