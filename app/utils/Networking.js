@@ -1,98 +1,52 @@
+import SocketIOClient from 'socket.io-client';
+
 import Config from '../config/config';
 
 import { addMatch } from '../actions/match';
 import { addTeam } from '../actions/team';
 
-class Connection extends WebSocket {
-    constructor(server, dispatch) {
-        super(server);
+var socket;
 
-        this.dispatch = dispatch;
+function init(dispatch) {
+    socket = SocketIOClient(Config.SERVER);
 
-        this._isUpdating = false;
-        this._lastUpdate = "";
-        this.update = this.update.bind(this);
+    socket.on('connect', () => {
+        refresh();
+    });
 
-        this._send = this._send.bind(this);
-        this._handle = this._handle.bind(this);
-        this._handleUpdate = this._handleUpdate.bind(this);
+    socket.on('reconnect', () => {
+        refresh();
+    });
 
-        this.onmessage = this._handle;
+    socket.on('submit_match', (match) => {
+        dispatch(addMatch(JSON.parse(match)));
+    });
 
-        this.onopen = () => {
-            this.update();
-        };
-    }
-
-    _send(packet) {
-        if (this.readyState != this.OPEN) {
-            return;
-        }
-
-        super.send(JSON.stringify(packet));
-    }
-
-    update() {
-        if (this._isUpdating) return;
-        this._isUpdating = true;
-
-        this._send({
-            action: "refresh",
-            last_update: this._lastUpdate,
-        });
-    }
-
-    submitMatch(form) {
-        this._send({
-            action: "submit_match",
-            form
-        });
-    }
-
-    submitTeam(form) {
-        this._send({
-            action: "submit_team",
-            form
-        });
-    }
-
-    requestAnalytics(team) {
-
-    }
-
-    _handle(raw) {
-        const data = JSON.parse(raw.data);
-        console.warn(raw.data);
-
-        switch (data.action) {
-        case "refresh":
-            this._handleUpdate(data);
-            break;
-        }
-
-        this._lastUpdate = data.date;
-    }
-
-    _handleUpdate(update) {
-        update.data.forEach((u) => {
-            switch (u.action) {
-            case "new_match":
-                this.dispatch(addMatch(u.data));
-                break;
-            case "new_team":
-                this.dispatch(addTeam(u.data));
-                break;
-            }
-        });
-
-        this._isUpdating = false;
-    }
+    socket.on('submit_team', (team) => {
+        dispatch(addTeam(JSON.parse(team)));
+    });
 }
 
-function connect(dispatch) {
-    return new Connection(Config.SERVER, dispatch);
+function submitMatch(match) {
+    if (!socket) return;
+
+    socket.emit('submit_match', JSON.stringify(match));
+}
+
+function submitTeam(team) {
+    if (!socket) return;
+
+    socket.emit('submit_team', JSON.stringify(team));
+}
+
+function refresh() {
+    if (!socket) return;
+
+    socket.emit('request_update', '0');
 }
 
 export default {
-    connect
+    init,
+    submitTeam,
+    submitMatch
 };

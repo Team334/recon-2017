@@ -27,25 +27,25 @@ const routes = {
             }
         },
         TEAM: {
-            render: (navigator, conn) => {
-                return <CollectTeam conn={conn} navigator={navigator} />;
+            render: (navigator) => {
+                return <CollectTeam navigator={navigator} />;
             }
         },
         MATCH: {
-            render: (navigator, conn) => {
-                return <CollectMatch conn={conn} navigator={navigator} />;
+            render: (navigator) => {
+                return <CollectMatch navigator={navigator} />;
             }
         }
     },
     ANALYZE: {
         MAIN: {
-            render: (navigator, conn) => {
-                return <AnalyzeMain conn={conn} navigator={navigator} />;
+            render: (navigator) => {
+                return <AnalyzeMain navigator={navigator} />;
             }
         },
         TEAM: {
-            render: (navigator, conn, team) => {
-                return <AnalyzeTeam conn={conn} navigator={navigator} team={team} />
+            render: (navigator, team) => {
+                return <AnalyzeTeam navigator={navigator} team={team} />
             }
         } 
     }

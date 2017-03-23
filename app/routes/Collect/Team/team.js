@@ -86,7 +86,7 @@ class CollectTeam extends Component {
             return;
         }
 
-        this.props.conn.submitTeam({
+        Networking.submitTeam({
             number: this.state.teamNumber,
         });
 
