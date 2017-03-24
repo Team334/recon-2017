@@ -63,10 +63,12 @@ const styles = StyleSheet.create({
     },
     matchNum: {
         textAlign: 'center',
-        height: 40,
+        height: 50,
         borderBottomColor: '#000000',
         fontSize: 30,
-        color: '#ebf7f9'
+        color: '#ebf7f9',
+
+        paddingBottom: 10 
     },
     section: {
         flexDirection: 'row',
@@ -188,7 +190,7 @@ class CollectMatch extends Component {
     }
 
     _submit() {
-        this.props.conn.submitMatch(this.state.form);
+        Networking.submitMatch(this.state.form);
 
         this.props.dispatch(addMatch(this.state.form));
         this.props.navigator.pop();
@@ -273,7 +275,7 @@ class CollectMatch extends Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <View ref="scrollContainer" style={{flex: 1}}>
+                    <View ref="scrollContainer" onLayout={() => {}} style={{flex: 1}}>
                         <ScrollView
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
@@ -327,6 +329,7 @@ class PrematchForm extends Component {
                     placeholder='match'
                     maxLength={3}
                     width={200}
+                    multiline={false}
                     style={styles.matchNum}
                     keyboardType='numeric'
                     onChangeText={(text) => this.props.set('match', text)}

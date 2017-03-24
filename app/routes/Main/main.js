@@ -38,7 +38,7 @@ class Main extends Component {
             },
         };
 
-        this.conn = Networking.connect(this.props.dispatch);
+        Networking.init(this.props.dispatch);
 
         this._onMatchPress = this._onMatchPress.bind(this);
         this._onTeamPress = this._onTeamPress.bind(this);
@@ -124,7 +124,7 @@ class Main extends Component {
                                 ref="innerNav"
                                 initialRoute={this.state.scene}
                                 renderScene={(route, navigator) => {
-                                    return route.render(navigator, this.conn, this.state.analyzedTeam);
+                                    return route.render(navigator, this.state.analyzedTeam);
                                 }}
                                 configureScene={(route, routeStack) => {
                                     return {
@@ -140,7 +140,6 @@ class Main extends Component {
                 <Search ref="search" onSearch={(input) => this._sort(input)} />
                 <View style={styles.matchesContainer}>
                     <Matches
-                        conn={this.conn}
                         sort={this.state.sort}
                         hideLoader={false}
                         onMatchPress={this._onMatchPress}

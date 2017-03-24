@@ -1,4 +1,4 @@
-const SERVER = "ws://localhost:8000";
+const SERVER = "https://faa90f5d.ngrok.io";
 
 export default {
     SERVER
