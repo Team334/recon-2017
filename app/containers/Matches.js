@@ -42,10 +42,11 @@ class Matches extends Component {
     componentWillUpdate(nextProps, nextState) {
         if (nextProps == this.props) return;
 
+        let matches = this._filter(nextProps.matches, nextProps.sort).sort((a, b) => b.match - a.match);
         this.setState({ready: false}, () =>
             InteractionManager.runAfterInteractions(() =>
                 this.setState({
-                    matches: this.state.matches.cloneWithRows(this._filter(nextProps.matches, nextProps.sort)),
+                    matches: this.state.matches.cloneWithRows(matches),
                     ready: true,
                 })
             )
@@ -102,6 +103,6 @@ class Matches extends Component {
 
 export default connect((state) => {
     return {
-        matches: state.matches
+        matches: state.matches.sort((a, b) => b.match - a.match)
     };
 }, null)(Matches);

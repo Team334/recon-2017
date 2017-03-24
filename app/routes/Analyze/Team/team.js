@@ -18,21 +18,21 @@ import Matches from '../../../containers/Matches';
 
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import EntypoIcon from 'react-native-vector-icons/Entypo'; 
+import EntypoIcon from 'react-native-vector-icons/Entypo';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
 
     },
-    section: { 
-        backgroundColor: '#5E8FDC', 
+    section: {
+        backgroundColor: '#5E8FDC',
         borderRadius: 5,
         flex: 1,
 
         shadowColor: '#000000',
         shadowRadius: 2,
-        shadowOpacity: 0.2, 
+        shadowOpacity: 0.2,
         shadowOffset: {
             width: 0,
             height: 0,
@@ -46,14 +46,13 @@ const styles = StyleSheet.create({
         margin: 5,
 
         borderRadius: 5,
-        
-        backgroundColor: '#ebf7f9', 
+        backgroundColor: '#ebf7f9',
 
         height: 250,
 
         shadowColor: '#000000',
         shadowRadius: 4,
-        shadowOpacity: 0.1, 
+        shadowOpacity: 0.1,
         shadowOffset: {
             width: 0,
             height: 0,
@@ -90,7 +89,7 @@ class AnalyzeTeam extends Component {
 
         for (let i = 0; i < 16; i++) {
             elements.push(
-                <Line 
+                <Line
                     key={(id++).toString()}
                     x1="15"
                     y1={(i * ((this.state.height - 30) / 15) + 15).toString()}
@@ -104,7 +103,7 @@ class AnalyzeTeam extends Component {
             );
         }
 
-        const lines = [{ 
+        const lines = [{
             mode: "end",
             field: "score",
             color: "#59838B",
@@ -125,6 +124,10 @@ class AnalyzeTeam extends Component {
             color: "#787FEC",
             max: 4,
         }];
+
+        if (this.props.matches.length <= 1) {
+            return elements;
+        }
 
         const xOffset = (this.state.width - 30) / (this.props.matches.length / 2);
         for (let i = 0; i < lines.length; i++) {
@@ -165,7 +168,7 @@ class AnalyzeTeam extends Component {
                 {this._generateGraph()}
             </Svg>
         );
- 
+
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.section}>
@@ -177,7 +180,7 @@ class AnalyzeTeam extends Component {
                     <Bar color="#7B7FEC" hint="Average Fouls" icon={exclamation} amount={1} full={4} />
                 </View>
                 <View style={[styles.section]}>
-                    <View ref="graphContainer" style={[styles.graphContainer, {height: this.state.height}]}>
+                    <View ref="graphContainer" onLayout={() => {}} style={[styles.graphContainer, {height: this.state.height}]}>
                         {svg}
                     </View>
                 </View>

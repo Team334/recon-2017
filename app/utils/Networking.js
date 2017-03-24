@@ -5,10 +5,11 @@ import Config from '../config/config';
 import { addMatch } from '../actions/match';
 import { addTeam } from '../actions/team';
 
-var socket;
+var socket, dispatch;
 
-function init(dispatch) {
+function init(dis) {
     socket = SocketIOClient(Config.SERVER);
+    dispatch = dis;
 
     socket.on('connect', () => {
         refresh();

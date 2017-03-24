@@ -207,7 +207,7 @@ export default class Bar extends Component {
                     </TouchableOpacity>
                 </Animated.View>
                 <Animated.View style={[styles.content, {opacity: this.state.opacity}]}>
-                    <View ref="content">
+                    <View ref="content" onLayout={() => {}}>
                         {this.state.content}
                     </View>
                 </Animated.View>

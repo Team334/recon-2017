@@ -6,8 +6,9 @@ import {
     StatusBar
 } from 'react-native';
 
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 import userReducers from './reducers/users';
 import teamReducers from './reducers/teams';
@@ -22,11 +23,14 @@ const styles = StyleSheet.create({
     },
 });
 
-let store = createStore(combineReducers({
-    user: userReducers, 
-    teams: teamReducers, 
-    matches: matchReducers,
-}));
+let store = createStore(
+    combineReducers({
+        user: userReducers, 
+        teams: teamReducers, 
+        matches: matchReducers,
+    }),
+    applyMiddleware(thunk)
+ );
 
 export default class Recon extends Component {
     constructor(props) {
