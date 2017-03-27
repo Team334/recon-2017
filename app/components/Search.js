@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
 
+        paddingBottom: 3,
+
         marginLeft: 5,
         fontSize: 24,
     },

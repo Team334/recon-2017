@@ -12,6 +12,7 @@ export default function match(state=[], action) {
             if (state[i].team == action.match.team &&
                 state[i].match == action.match.match) {
                 index = i;
+                break;
             }
         }
 

@@ -3,7 +3,9 @@ import {
     View,
     Text,
     Dimensions, 
-    ListView, StyleSheet, ScrollView,
+    ListView, 
+    StyleSheet, 
+    ScrollView,
     InteractionManager,
 } from 'react-native';
 
@@ -84,7 +86,7 @@ class Matches extends Component {
     }
 
     render() {
-        return this.state.ready ? (
+        return (
             <ListView
                 dataSource={this.state.matches}
                 initialListSize={5}
@@ -93,11 +95,7 @@ class Matches extends Component {
                 style={styles.container}
                 contentContainerStyle={styles.innerContainer}
             />
-        ) : !this.props.hideLoader ? (
-            <View style={{justifyContent: 'center', alignItems: 'center', zIndex: -1, flex: 1, top: -50}}>
-                <Progress.CircleSnail color={'#5E8FDC'} />
-            </View>
-        ) : null ;
+        );
     }
 }
 

@@ -114,8 +114,7 @@ class Main extends Component {
                                 <MaterialIcon.Button
                                     name="close"
                                     size={35}
-                                    color="#ebf7f9"
-                                    style={{backgroundColor: "#1E5AB8"}}
+                                    color="#ebf7f9" style={{backgroundColor: "#1E5AB8"}}
                                     borderRadius={0}
                                     onPress={() => this.toggleModal(false)}
                                 />
@@ -215,7 +214,7 @@ const styles = StyleSheet.create({
     matchesContainer: {
         flex: 1,
 
-        marginTop: 5,
+        marginTop: 65,
         marginBottom: 70,
     },
     fixed: {
@@ -276,8 +275,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#ebf7f9',
 
         height: 70,
-        width: Dimensions.get('window').width,
-        top: Dimensions.get('window').height - 70,
+
+        bottom: 0,
+        left: 0,
+        right: 0,
 
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -287,8 +288,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
 
         elevation: 20,
-
-        zIndex: 1,
     },
     navButton: {
         width: 110,

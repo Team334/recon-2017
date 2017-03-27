@@ -185,7 +185,7 @@ class AnalyzeTeam extends Component {
                     </View>
                 </View>
                 <View style={{flex: 1}}>
-                    <Matches hideLoader={true} sort={{type: 'team', query: this.props.team}} />
+                    <Matches sort={{type: 'team', query: this.props.team}} />
                 </View>
             </ScrollView>
         );

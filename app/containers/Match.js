@@ -125,7 +125,6 @@ const red = StyleSheet.create({
         fontSize: 38,
         lineHeight: 38,
 
-        marginTop: 5,
 
         textAlign: 'center',
     }
@@ -205,8 +204,6 @@ const blue = StyleSheet.create({
     score: {
         fontSize: 38,
         lineHeight: 38,
-
-        marginTop: 5,
 
         textAlign: 'center',
     }
