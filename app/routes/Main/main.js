@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     matchesContainer: {
         flex: 1,
 
-        marginTop: 65,
+        marginTop: 5,
         marginBottom: 70,
     },
     fixed: {
