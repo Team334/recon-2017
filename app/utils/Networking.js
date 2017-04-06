@@ -40,6 +40,12 @@ function submitTeam(team) {
     socket.emit('submit_team', JSON.stringify(team));
 }
 
+function requestAnalytics(team, callback) {
+    if (!socket) return;
+
+    socket.emit('request_analytics', team, callback);
+}
+
 function refresh() {
     if (!socket) return;
 
@@ -49,5 +55,6 @@ function refresh() {
 export default {
     init,
     submitTeam,
-    submitMatch
+    submitMatch,
+    requestAnalytics
 };

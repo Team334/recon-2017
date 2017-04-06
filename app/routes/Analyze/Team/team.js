@@ -11,6 +11,8 @@ import Svg, {
     Polyline
 } from 'react-native-svg';
 
+import Networking from '../../../utils/Networking';
+
 import { connect } from 'react-redux';
 
 import Bar from '../../../components/Bar';
@@ -69,10 +71,18 @@ class AnalyzeTeam extends Component {
         super(props);
 
         this._generateGraph = this._generateGraph.bind(this);
+        this._handleAnalytics = this._handleAnalytics.bind(this);
 
         this.state = {
             width: 0,
             height: 0,
+            
+            avg_fouls: 0,
+            avg_gears: 0,
+            avg_hoppers: 0,
+            avg_points: 0,
+            opr: 0,
+            ccwm: 0,
         };
 
     }
@@ -81,6 +91,20 @@ class AnalyzeTeam extends Component {
         requestAnimationFrame(() => this.refs.graphContainer.measure((ox, oy, width, height, px, py) => {
             this.setState({width, height: width * (3/4)});
         }));
+
+        Networking.requestAnalytics(this.props.team, this._handleAnalytics);
+    }
+
+    _handleAnalytics(data) {
+        let stat = JSON.parse(data);
+        this.setState({
+            avg_fouls: stat.avg_fouls,
+            avg_gears: stat.avg_gears,
+            avg_hoppers: stat.avg_hoppers,
+            avg_points: stat.avg_points,
+            opr: stat.opr,
+            ccwm: stat.ccwm,
+        });
     }
 
     _generateGraph() {
@@ -172,12 +196,12 @@ class AnalyzeTeam extends Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.section}>
-                    <Bar color="#F55443" hint="Offensive Power Rating" icon={sword} amount={100} full={100} />
-                    <Bar color="#FCBD24" hint="Calculated Contrib. to Winning Margin" icon={trophy} amount={50} full={100} />
-                    <Bar color="#59838B" hint="Average Points" icon={point} amount={80} full={300} />
-                    <Bar color="#4D98E4" hint="Average Gears" icon={gear} amount={3} full={8} />
-                    <Bar color="#418E50" hint="Average Hoppers Activated" icon={hopper} amount={2} full={4} />
-                    <Bar color="#7B7FEC" hint="Average Fouls" icon={exclamation} amount={1} full={4} />
+                    <Bar color="#F55443" hint="Offensive Power Rating" icon={sword} amount={this.state.opr} full={100} />
+                    <Bar color="#FCBD24" hint="Calculated Contrib. to Winning Margin" icon={trophy} amount={this.state.ccwm} full={100} />
+                    <Bar color="#59838B" hint="Average Points" icon={point} amount={this.state.avg_points} full={150} />
+                    <Bar color="#4D98E4" hint="Average Gears" icon={gear} amount={this.state.avg_gears} full={8} />
+                    <Bar color="#418E50" hint="Average Hoppers Activated" icon={hopper} amount={this.state.avg_hoppers} full={4} />
+                    <Bar color="#7B7FEC" hint="Average Fouls" icon={exclamation} amount={this.state.avg_fouls} full={4} />
                 </View>
                 <View style={[styles.section]}>
                     <View ref="graphContainer" onLayout={() => {}} style={[styles.graphContainer, {height: this.state.height}]}>

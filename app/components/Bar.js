@@ -23,8 +23,7 @@ const styles = StyleSheet.create({
         elevation: 5,
 
         backgroundColor: '#ebf7f9',
-
-        borderRadius: 5,
+        borderRadius: 5, 
         margin: 5,
     },
     icon: {
@@ -189,13 +188,38 @@ export default class Bar extends Component {
                     </Animated.View>
                 )
             }, () => Animated.timing(this.state.length, {
-                toValue: this.props.amount / this.props.full * (width - 5),
+                toValue: Math.max(this.props.amount, 0) / this.props.full * (width - 5),
                 duration: 1000,
             }).start(() => Animated.timing(this.state.displayHint, {
                 toValue: 1,
                 duration: 300,
             }).start()));
         }));
+    }
+
+    componentWillUpdate(nextProps) {
+        if (nextProps.amount == this.props.amount) {
+            return;
+        }
+
+        this.setState({
+            content: (
+                <Animated.View style={[styles.bar, {backgroundColor: this.props.color, width: this.state.length}]}>
+                    <Animated.View style={{opacity: this.state.displayHint}}>
+                        <Text style={styles.amount}>{parseInt(nextProps.amount)}</Text>
+                    </Animated.View>
+                </Animated.View>
+            )
+
+        }, () => Animated.timing(this.state.length, {
+                toValue: Math.max(nextProps.amount, 0) / this.props.full * (this.state.width - 5),
+                duration: 1000,
+            }).start(() => { 
+                Animated.timing(this.state.displayHint, {
+                    toValue: 1,
+                    duration: 300,
+            }).start() }
+        ));
     }
 
     render() {
