@@ -8,8 +8,7 @@ import {
 
 import Svg, {
     Line,
-    Polyline
-} from 'react-native-svg';
+    Polyline } from 'react-native-svg';
 
 import Networking from '../../../utils/Networking';
 
@@ -76,7 +75,7 @@ class AnalyzeTeam extends Component {
         this.state = {
             width: 0,
             height: 0,
-            
+
             avg_fouls: 0,
             avg_gears: 0,
             avg_hoppers: 0,
@@ -158,7 +157,7 @@ class AnalyzeTeam extends Component {
             let path = "";
 
             for (let j = 0; j < this.props.matches.length; j++) {
-                let percentage = this.props.matches[j][lines[i].mode][lines[i].field] / lines[i].max;
+                let percentage = Math.min(this.props.matches[j][lines[i].mode][lines[i].field] / lines[i].max, 1);
                 let y = (this.state.height - percentage * (this.state.height - 30)) - 15;
                 let x = ((this.props.matches.length - 1 - j) * ((this.state.width - 60) / (this.props.matches.length - 1))) + 30;
                 path += x + "," + y + " ";
@@ -198,7 +197,7 @@ class AnalyzeTeam extends Component {
                 <View style={styles.section}>
                     <Bar color="#F55443" hint="Offensive Power Rating" icon={sword} amount={this.state.opr} full={100} />
                     <Bar color="#FCBD24" hint="Calculated Contrib. to Winning Margin" icon={trophy} amount={this.state.ccwm} full={100} />
-                    <Bar color="#59838B" hint="Average Points" icon={point} amount={this.state.avg_points} full={150} />
+                    <Bar color="#59838B" hint="Average Points" icon={point} amount={this.state.avg_points} full={300} />
                     <Bar color="#4D98E4" hint="Average Gears" icon={gear} amount={this.state.avg_gears} full={8} />
                     <Bar color="#418E50" hint="Average Hoppers Activated" icon={hopper} amount={this.state.avg_hoppers} full={4} />
                     <Bar color="#7B7FEC" hint="Average Fouls" icon={exclamation} amount={this.state.avg_fouls} full={4} />

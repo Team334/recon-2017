@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    Dimensions, 
-    ListView, 
-    StyleSheet, 
+    Dimensions,
+    ListView,
+    StyleSheet,
     ScrollView,
     InteractionManager,
 } from 'react-native';

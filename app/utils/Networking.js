@@ -14,8 +14,7 @@ function init(dis) {
     socket.on('connect', () => {
         refresh();
     });
-
-    socket.on('reconnect', () => {
+socket.on('reconnect', () => {
         refresh();
     });
 
@@ -46,6 +45,12 @@ function requestAnalytics(team, callback) {
     socket.emit('request_analytics', team, callback);
 }
 
+function requestRankings(callback) {
+    if (!socket) return;
+
+    socket.emit('request_rankings', '0', callback);
+}
+
 function refresh() {
     if (!socket) return;
 
@@ -56,5 +61,6 @@ export default {
     init,
     submitTeam,
     submitMatch,
-    requestAnalytics
+    requestAnalytics,
+    requestRankings
 };

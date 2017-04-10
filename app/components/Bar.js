@@ -140,7 +140,7 @@ export default class Bar extends Component {
                 content: !this.state.hint ? (
                     <Animated.View style={[styles.bar, {backgroundColor: this.props.color, width: this.state.length}]}>
                         <Animated.View style={{opacity: this.state.displayHint}}>
-                            <Text style={styles.amount}>{this.props.amount}</Text>
+                            <Text style={styles.amount} numberOfLines={1}>{this.props.amount}</Text>
                         </Animated.View>
                     </Animated.View>
                 ) : (
@@ -187,8 +187,8 @@ export default class Bar extends Component {
                         </Animated.View>
                     </Animated.View>
                 )
-            }, () => Animated.timing(this.state.length, {
-                toValue: Math.max(this.props.amount, 0) / this.props.full * (width - 5),
+            }, () => this.props.amount > 0 && Animated.timing(this.state.length, {
+                toValue: Math.min(Math.max(this.props.amount, 0) / this.props.full * (width - 5), width - 5),
                 duration: 1000,
             }).start(() => Animated.timing(this.state.displayHint, {
                 toValue: 1,
@@ -211,8 +211,8 @@ export default class Bar extends Component {
                 </Animated.View>
             )
 
-        }, () => Animated.timing(this.state.length, {
-                toValue: Math.max(nextProps.amount, 0) / this.props.full * (this.state.width - 5),
+        }, () => this.props.amount > 0 && Animated.timing(this.state.length, {
+                toValue: Math.min(Math.max(nextProps.amount, 0) / this.props.full * (this.state.width - 5), this.state.width - 5),
                 duration: 1000,
             }).start(() => { 
                 Animated.timing(this.state.displayHint, {
