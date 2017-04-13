@@ -13,6 +13,10 @@ import Teams from '../../../components/Teams';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    teamContainer: {
+        flex: 1,
+        marginTop: 5,
     }
 });
 
@@ -25,7 +29,9 @@ class AnalyzeMain extends Component {
         return (
             <View style={styles.container}>
                 <Search />
-                <Teams />
+                <View style={styles.teamContainer}>
+                    <Teams />
+                </View>
             </View>
         );
     }

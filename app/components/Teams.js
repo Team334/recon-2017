@@ -10,6 +10,16 @@ import Networking from '../utils/Networking';
 import Team from '../components/Team';
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    innerContainer: {
+        alignItems: 'center',
+
+        marginHorizontal: 20,
+
+        paddingBottom: 10,
+    }
 });
 
 export default class Teams extends Component {
@@ -25,11 +35,9 @@ export default class Teams extends Component {
     }
 
     componentDidMount() {
-        Networking.requestRankings((rankings) => console.warn(rankings));
-    }
-
-    componentWillUpdate(nextProps, nextState) {
-
+        Networking.requestRankings((rankings) => this.setState({
+            teams: this.state.teams.cloneWithRows(JSON.parse(rankings).reverse()),
+        }));
     }
 
     _renderTeam(team) {

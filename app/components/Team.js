@@ -18,6 +18,7 @@ export default class Team extends Component {
         return (
             <View style={styles.match}>
                 <View style={styles.numberContainer}>
+                    <Text style={styles.matchNum}>Team</Text>
                     <TouchableOpacity onPress={() => this.props.onTeamPress && this.props.onTeamPress(this.props.match.team)}>
                         <Text style={styles.number}>{this.props.team.number}</Text>
                     </TouchableOpacity>
@@ -27,20 +28,20 @@ export default class Team extends Component {
                         horizontal={true}
                     >
                         <View style={styles.card}>
-                            <Text style={styles.text}>Avg. Score</Text>
-                            <Text style={[styles.text, styles.score]}>{this.props.team.avg_points}</Text>
+                            <Text style={styles.text}>Score</Text>
+                            <Text style={[styles.text, styles.score]}>{Math.ceil(this.props.team.avg_points)}</Text>
                         </View>
                         <View style={styles.card}>
                             <Text style={styles.text}>OPR</Text>
-                            <Text style={[styles.text, styles.score]}>{this.props.team.opr}</Text>
+                            <Text style={[styles.text, styles.score]}>{Math.ceil(this.props.team.opr)}</Text>
                         </View>
                         <View style={styles.card}>
                             <Text style={styles.text}>CCWM</Text>
-                            <Text style={[styles.text, styles.score]}>{this.props.team.teleop.ccwm}</Text>
+                            <Text style={[styles.text, styles.score]}>{Math.ceil(this.props.team.ccwm)}</Text>
                         </View>
                         <View style={styles.card}>
-                            <Text style={styles.text}>Avg. Gears</Text>
-                            <Text style={[styles.text, styles.score]}>{this.props.team.avg_gears}</Text>
+                            <Text style={styles.text}>Gears</Text>
+                            <Text style={[styles.text, styles.score]}>{Math.ceil(this.props.team.avg_gears)}</Text>
                         </View>
                     </ScrollView>
                 </View>
@@ -49,7 +50,7 @@ export default class Team extends Component {
     }
 }
 
-const blue = StyleSheet.create({
+const styles = StyleSheet.create({
     match: {
         height: 90,
         backgroundColor: '#5E8FDC',
@@ -84,7 +85,7 @@ const blue = StyleSheet.create({
     number: {
         color: '#ebf7f9',
 
-        fontSize: 25,
+        fontSize: 20,
     },
     matchNum: {
         color: '#ebf7f9',
