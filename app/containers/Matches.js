@@ -11,7 +11,6 @@ import {
 
 import { connect } from 'react-redux';
 
-import * as Progress from 'react-native-progress';
 import Match from './Match';
 
 const styles = StyleSheet.create({
