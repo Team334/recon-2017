@@ -1,7 +1,8 @@
-Recon
------
-<img width="20%" align="right" style="display: block; margin:40px auto;" src="http://i.imgur.com/sMcb7I9.gif">
-<img width="20%" align="right" style="display: block; margin:40px auto;" src="http://i.imgur.com/JvxqGw8.gif">
+<h1 align="center">334 Scouting: Recon</h1>
+
+<img width="20%" align="right" style="display: block; margin:40px auto;" src="http://i.imgur.com/XuUyBUk.gif">
+<img width="20%" align="right" style="display: block; margin:40px auto;" src="http://i.imgur.com/QpqcY2N.gif">
+
 Recon is a scouting app for the 2017 FRC competition steamworks. It is built on the principles:
 
 * centralized datastore _with mongodb_
