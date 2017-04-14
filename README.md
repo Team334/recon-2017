@@ -10,8 +10,7 @@ Recon is a scouting app for the 2017 FRC competition steamworks. It is built on 
 * powerful analytics _with numpy_
 
 <h3 align="center"><a href="https://www.youtube.com/watch?v=4BDBRJK_2Vo">Demo Video</a></h3>
-
-<b><b>
+<br>
 
 Usage
 -----
